@@ -1,0 +1,28 @@
+{
+  "name": "mindmap-layouts",
+  "version": "0.0.0",
+  "description": "mindmap layouts",
+  "main": "index.js",
+  "scripts": {
+    "publish-all": "npm run push-all && npm publish && npm run sync-cnpm",
+    "push-all": "npm run push-master && npm run push-tags && npm run push-gh-pages",
+    "push-gh-pages": "git checkout gh-pages && git merge master && git push && git checkout master",
+    "push-master": "git checkout master && git push",
+    "push-tags": "git push --tag",
+    "sync-cnpm": "cnpm sync $npm_package_name",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leungwensen/mindmap-layouts.git"
+  },
+  "keywords": [
+    "mindmap"
+  ],
+  "author": "leungwensen@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leungwensen/mindmap-layouts/issues"
+  },
+  "homepage": "https://github.com/leungwensen/mindmap-layouts#readme"
+}
