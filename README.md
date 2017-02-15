@@ -65,4 +65,4 @@ Checkout more about .xmind file: [xmind-sdk-javascript](https://github.com/leung
 
 ## links
 
-- [思维导图自动布局算法](http://leungwensen.github.io/blog/2017/mind-map-drawing-algorithms.html)
+- [思维导图自动布局算法](http://leungwensen.github.io/blog/2017/mindmap-drawing-algorithms.html)
