@@ -1,16 +1,16 @@
-const path = require('path');
+const path = require('path')
 
-function resolve(pathname) {
-  return path.resolve(__dirname, pathname);
+function resolve (pathname) {
+  return path.resolve(__dirname, pathname)
 }
 
 module.exports = {
   entry: {
-    'demo/hierarchical': resolve('./demo/src/hierarchical.js'),
+    'demo/hierarchical': resolve('./demo/src/hierarchical.js')
   },
   output: {
     path: resolve('./'),
-    filename: '[name].js',
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -23,10 +23,10 @@ module.exports = {
             'stage-0',
             'stage-1',
             'stage-2',
-            'stage-3',
-          ],
-        },
-      },
-    ],
-  },
-};
+            'stage-3'
+          ]
+        }
+      }
+    ]
+  }
+}
