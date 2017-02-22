@@ -10,11 +10,14 @@
     "push-master": "git checkout master && git push",
     "push-tags": "git push --tag",
     "sync-cnpm": "cnpm sync $npm_package_name",
-    "lint": "eslint .",
+    "lint": "eslint --fix .",
     "dev": "webpack-dev-server --config ./webpack-dev.config.js --open",
     "build": "webpack --config ./webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leungwensen/mindmap-layouts.git"
@@ -41,6 +44,7 @@
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-standard": "^2.0.1",
+    "pre-commit": "^1.2.2",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1"
   }
