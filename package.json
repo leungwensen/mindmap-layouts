@@ -10,6 +10,9 @@
     "push-master": "git checkout master && git push",
     "push-tags": "git push --tag",
     "sync-cnpm": "cnpm sync $npm_package_name",
+    "lint": "eslint .",
+    "dev": "webpack-dev-server --config ./webpack-dev.config.js --open",
+    "build": "webpack --config ./webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +27,17 @@
   "bugs": {
     "url": "https://github.com/leungwensen/mindmap-layouts/issues"
   },
-  "homepage": "https://github.com/leungwensen/mindmap-layouts#readme"
+  "homepage": "https://github.com/leungwensen/mindmap-layouts#readme",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2017": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-stage-1": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-preset-stage-3": "^6.22.0",
+    "eslint": "^3.16.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  }
 }
