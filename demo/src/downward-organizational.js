@@ -55,24 +55,24 @@ const canvas = document.getElementById('canvas')
 canvas.width = bb.width > 30000 ? 30000 : bb.width
 canvas.height = bb.height > 30000 ? 30000 : bb.height
 
-function randomNumber() {
+function randomNumber () {
   return Math.random()
 }
-function randomInt(n) {
+function randomInt (n) {
   return Math.floor(randomNumber() * n)
 }
-function randomColor() {
+function randomColor () {
   return `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`
 }
-function rgba2str(rgba) {
+function rgba2str (rgba) {
   return `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3]})`
 }
-function roundInt(num) {
+function roundInt (num) {
   return Math.round(num)
 }
 
 const lineColor = rgba2str(new Color(randomColor()).toGrey().toRgba())
-function drawBezierCurveToChild(n, c, ctx) {
+function drawBezierCurveToChild (n, c, ctx) {
   const beginX = roundInt(n.x + n.width / 2)
   const beginY = roundInt(n.y + n.height - n.vgap)
   const endX = roundInt(c.x + c.width / 2)
@@ -88,7 +88,7 @@ function drawBezierCurveToChild(n, c, ctx) {
   )
   ctx.stroke()
 }
-function drawNode(node, ctx) {
+function drawNode (node, ctx) {
   const color = new Color(randomColor())
   // console.log(color.toRgba());
   const x = roundInt(node.x + node.hgap)
@@ -103,7 +103,7 @@ function drawNode(node, ctx) {
     drawNode(child, ctx)
   })
 }
-function drawLink(node, ctx) {
+function drawLink (node, ctx) {
   node.children.forEach(child => {
     drawBezierCurveToChild(node, child, ctx)
     drawLink(child, ctx)
