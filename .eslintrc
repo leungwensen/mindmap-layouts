@@ -12,6 +12,7 @@
   "globals": {
   },
   "rules": {
+    "no-cond-assign": 0,
     "max-len": [
       2,
       120,

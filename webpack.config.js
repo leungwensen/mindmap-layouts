@@ -6,7 +6,8 @@ function resolve (pathname) {
 
 module.exports = {
   entry: {
-    'demo/hierarchical': resolve('./demo/src/hierarchical.js')
+    'demo/dist/right-logical': resolve('./demo/src/right-logical.js'),
+    'demo/dist/downward-organizational': resolve('./demo/src/downward-organizational.js')
   },
   output: {
     path: resolve('./'),

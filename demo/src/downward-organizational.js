@@ -1,36 +1,53 @@
-import TreeNode from '../../lib/tree-node'
-import {
-  Tree,
-  layout
-} from '../../lib/layouts/non-layered-tidy-trees'
-import {
-  convert,
-  convertBack
-} from '../../lib/layouts/marshall'
-import GenerateTrees from './generate-trees'
+import DownwardOrganizationalLayout from '../../lib/layouts/downward-organizational'
 import Color from './color/index'
 
-console.log(TreeNode, Tree, layout, GenerateTrees)
-
-const count = 20
-const gen = new GenerateTrees(count, 10, 100, 10, 100)
-
-const rootNode = gen.rand()
-rootNode.addGap(20, 50)
+const layout = new DownwardOrganizationalLayout({
+  'name': 'root',
+  'children': [
+    {
+      'name': 'child-1',
+      'children': [
+        {
+          'name': 'child-1-1'
+        },
+        {
+          'name': 'child-1-2',
+          'children': [
+            {
+              'name': 'child-1-2-1'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      'name': 'child-2'
+    },
+    {
+      'name': 'child-3'
+    },
+    {
+      'name': 'child-4',
+      'children': [
+        {
+          'name': 'child-4-1'
+        },
+        {
+          'name': 'child-4-2'
+        }
+      ]
+    }
+  ]
+})
 
 const t0 = window.performance.now()
 
-// layout
-rootNode.layer()
-const converted = convert(rootNode)
-layout(converted)
-convertBack(converted, rootNode)
-rootNode.normalizeX()
-const bb = rootNode.getBoundingBox()
-console.log(rootNode, bb)
+const rootNode = layout.doLayout()
 
 const t1 = window.performance.now()
 
+const bb = rootNode.getBoundingBox()
+console.log(rootNode, bb)
 const canvas = document.getElementById('canvas')
 canvas.width = bb.width > 30000 ? 30000 : bb.width
 canvas.height = bb.height > 30000 ? 30000 : bb.height
@@ -54,16 +71,16 @@ function roundInt (num) {
 const lineColor = rgba2str(new Color(randomColor()).toGrey().toRgba())
 function drawBezierCurveToChild (n, c, ctx) {
   const beginX = roundInt(n.x + n.width / 2)
-  const beginY = roundInt(n.y + n.height - n.vgap / 2)
+  const beginY = roundInt(n.y + n.height - n.vgap)
   const endX = roundInt(c.x + c.width / 2)
-  const endY = roundInt(c.y + n.vgap / 2)
+  const endY = roundInt(c.y + c.vgap)
   console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
   ctx.strokeStyle = lineColor
   ctx.beginPath()
   ctx.moveTo(beginX, beginY)
   ctx.bezierCurveTo(
-    beginX, roundInt(beginY + n.vgap / 2),
-    endX, roundInt(endY - c.vgap / 2),
+    beginX, roundInt(beginY + n.vgap),
+    endX, roundInt(endY - c.vgap),
     endX, endY
   )
   ctx.stroke()
@@ -71,10 +88,10 @@ function drawBezierCurveToChild (n, c, ctx) {
 function drawNode (node, ctx) {
   const color = new Color(randomColor())
   // console.log(color.toRgba());
-  const x = roundInt(node.x + node.hgap / 2)
-  const y = roundInt(node.y + node.vgap / 2)
-  const width = roundInt(node.width - node.hgap)
-  const height = roundInt(node.height - node.vgap)
+  const x = roundInt(node.x + node.hgap)
+  const y = roundInt(node.y + node.vgap)
+  const width = roundInt(node.width - node.hgap * 2)
+  const height = roundInt(node.height - node.vgap * 2)
   ctx.fillStyle = rgba2str(color.toRgba())
   ctx.fillRect(x, y, width, height)
   ctx.strokeStyle = rgba2str(color.toGrey().toRgba())
@@ -92,7 +109,7 @@ function drawLink (node, ctx) {
 
 const t2 = window.performance.now()
 
-console.log(`there are ${count} tree nodes`)
+console.log(`there are 7 tree nodes`)
 console.log(`layout algorithm took ${t1 - t0}ms, and drawing took ${t2 - t1}ms.`)
 
 if (canvas.getContext) {
@@ -100,3 +117,4 @@ if (canvas.getContext) {
   drawLink(rootNode, ctx)
   drawNode(rootNode, ctx)
 }
+
