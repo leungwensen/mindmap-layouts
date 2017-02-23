@@ -63,6 +63,10 @@ Checkout more about .xmind file: [xmind-sdk-javascript](https://github.com/leung
 
 ## API
 
+## demos
+
+- [hierarchical](./demo/hierarchical.html)
+
 ## links
 
 - [思维导图自动布局算法](http://leungwensen.github.io/blog/2017/mindmap-drawing-algorithms.html)
