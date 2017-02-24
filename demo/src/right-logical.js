@@ -2,7 +2,7 @@ import RightLogicalLayout from '../../lib/layouts/right-logical'
 import Color from './color/index'
 import generateTree from './data/generate-tree'
 
-const count = 50
+const count = 20
 const root = generateTree(count)
 Object.assign(root, {
   'height': 80,

@@ -1,9 +1,8 @@
 import DownwardOrganizationalLayout from '../../lib/layouts/downward-organizational'
 import Color from './color/index'
 import generateTree from './data/generate-tree'
-import Node from '../../lib/hierarchy/node'
 
-const count = 50
+const count = 20
 const root = generateTree(count)
 Object.assign(root, {
   'height': 80,
@@ -11,18 +10,7 @@ Object.assign(root, {
   'vgap': 100
 })
 
-const originNode = new Node(root, {
-  getHeight () {
-    return randomInt(400)
-  },
-  getWidth () {
-    return 32
-  }
-})
-
-console.log(originNode)
-
-const layout = new DownwardOrganizationalLayout(originNode)
+const layout = new DownwardOrganizationalLayout(root)
 
 const t0 = window.performance.now()
 
