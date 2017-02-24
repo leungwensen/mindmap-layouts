@@ -65,7 +65,8 @@ Checkout more about .xmind file: [xmind-sdk-javascript](https://github.com/leung
 
 ## demos
 
-- [hierarchical](./demo/hierarchical.html)
+- [right logical](http://leungwensen.github.io/mindmap-layouts/demo/right-logical.html)
+- [downward organizational](http://leungwensen.github.io/mindmap-layouts/demo/downward-organizational.html)
 
 ## links
 
