@@ -949,7 +949,7 @@ function drawBezierCurveToChild(n, c, ctx) {
   ctx.strokeStyle = lineColor;
   ctx.beginPath();
   ctx.moveTo(beginX, beginY);
-  ctx.bezierCurveTo(roundInt(beginX + n.hgap), beginY, roundInt(endX - c.hgap), endY, endX, endY);
+  ctx.bezierCurveTo(roundInt(beginX + (n.hgap + c.hgap) / 2), beginY, roundInt(endX - (n.hgap + c.hgap) / 2), endY, endX, endY);
   ctx.stroke();
 }
 function drawNode(node, ctx) {
