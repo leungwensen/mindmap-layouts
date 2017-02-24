@@ -1,47 +1,28 @@
 import DownwardOrganizationalLayout from '../../lib/layouts/downward-organizational'
 import Color from './color/index'
+import generateTree from './data/generate-tree'
+import Node from '../../lib/hierarchy/node'
 
-const layout = new DownwardOrganizationalLayout({
-  'name': 'root',
+const count = 50
+const root = generateTree(count)
+Object.assign(root, {
   'height': 80,
   'width': 300,
-  'vgap': 100,
-  'children': [
-    {
-      'name': 'child-1',
-      'children': [
-        {
-          'name': 'child-1-1'
-        },
-        {
-          'name': 'child-1-2',
-          'children': [
-            {
-              'name': 'child-1-2-1'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      'name': 'child-2'
-    },
-    {
-      'name': 'child-3'
-    },
-    {
-      'name': 'child-4',
-      'children': [
-        {
-          'name': 'child-4-1'
-        },
-        {
-          'name': 'child-4-2'
-        }
-      ]
-    }
-  ]
+  'vgap': 100
 })
+
+const originNode = new Node(root, {
+  getHeight () {
+    return randomInt(400)
+  },
+  getWidth () {
+    return 32
+  }
+})
+
+console.log(originNode)
+
+const layout = new DownwardOrganizationalLayout(originNode)
 
 const t0 = window.performance.now()
 
@@ -50,7 +31,7 @@ const rootNode = layout.doLayout()
 const t1 = window.performance.now()
 
 const bb = rootNode.getBoundingBox()
-console.log(rootNode, bb)
+// console.log(rootNode, bb)
 const canvas = document.getElementById('canvas')
 canvas.width = bb.width > 30000 ? 30000 : bb.width
 canvas.height = bb.height > 30000 ? 30000 : bb.height
@@ -77,7 +58,7 @@ function drawBezierCurveToChild (n, c, ctx) {
   const beginY = roundInt(n.y + n.height - n.vgap)
   const endX = roundInt(c.x + c.width / 2)
   const endY = roundInt(c.y + c.vgap)
-  console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
+  // console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
   ctx.strokeStyle = lineColor
   ctx.beginPath()
   ctx.moveTo(beginX, beginY)
@@ -112,7 +93,7 @@ function drawLink (node, ctx) {
 
 const t2 = window.performance.now()
 
-console.log(`there are 7 tree nodes`)
+console.log(`there are ${count} tree nodes`)
 console.log(`layout algorithm took ${t1 - t0}ms, and drawing took ${t2 - t1}ms.`)
 
 if (canvas.getContext) {
