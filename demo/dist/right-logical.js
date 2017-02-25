@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__named__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__named__ = __webpack_require__(2);
 
 
 const round = Math.round;
@@ -301,6 +301,51 @@ Color.named = Color.namedColor = __WEBPACK_IMPORTED_MODULE_0__named__["a" /* def
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const lettersLen = letters.length;
+
+function roundRandomInt(n) {
+  return Math.round(Math.random() * n);
+}
+function randomString(n) {
+  let res = '';
+  for (let i = 0; i < n; i++) {
+    res += letters[roundRandomInt(lettersLen)];
+  }
+  return res;
+}
+
+function generateRoot() {
+  return {
+    name: randomString(roundRandomInt(10)),
+    children: []
+  };
+}
+
+function generateNode(root, child) {
+  const rand = roundRandomInt(root.children.length);
+  if (rand === root.children.length) {
+    root.children.push(child);
+  } else {
+    generateNode(root.children[rand], child);
+  }
+}
+
+function randomNode(maxSize) {
+  const root = generateRoot();
+  for (let i = 0; i < maxSize; i++) {
+    generateNode(root, generateRoot());
+  }
+  return root;
+}
+
+/* harmony default export */ __webpack_exports__["a"] = randomNode;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 const colors = {
   aliceblue: '#f0f8ff',
   antiquewhite: '#faebd7',
@@ -456,7 +501,7 @@ const colors = {
 /* harmony default export */ __webpack_exports__["a"] = colors;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -468,10 +513,7 @@ function getNodeBoundingBox(n, bb) {
   });
   return bb;
 }
-const tolerance = 0.0;
-function overlap(xStart, xEnd, xStart2, xEnd2) {
-  return xStart2 + tolerance < xEnd - tolerance && xEnd2 - tolerance > xStart + tolerance || xStart + tolerance < xEnd2 - tolerance && xEnd - tolerance > xStart2 + tolerance;
-}
+
 const PEM = 18;
 const DEFAULT_HEIGHT = PEM * 2;
 const DEFAULT_GAP = PEM;
@@ -511,8 +553,6 @@ class Node {
     me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
     me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
     me.x = me.y = 0;
-    me.xSize = me.width;
-    me.ySize = me.height;
     me.depth = 0;
     const nodes = [me];
     let node;
@@ -541,11 +581,6 @@ class Node {
     return getNodeBoundingBox(this, bb);
   }
 
-  overlapsWith(other) {
-    const me = this;
-    return overlap(me.x, me.x + me.width, other.x, other.x + other.width) && overlap(me.y, me.y + me.height, other.y, other.y + other.height);
-  }
-
   addGap(hgap, vgap) {
     const me = this;
     me.hgap += hgap;
@@ -553,39 +588,12 @@ class Node {
     me.width += 2 * hgap;
     me.height += 2 * vgap;
   }
-
-  addSize(hsize, vsize) {
-    const me = this;
-    me.width += hsize;
-    me.height += vsize;
-    me.forEach(child => {
-      child.addSize(hsize, vsize);
-    });
-  }
-
-  addGapPerDepth(gapPerDepth, depth, maxDepth) {
-    const me = this;
-    me.hgap += (maxDepth - depth) * gapPerDepth;
-    me.width += 2 * (maxDepth - depth) * gapPerDepth;
-    me.forEach(child => {
-      child.addGapPerDepth(gapPerDepth, depth + 1, maxDepth);
-    });
-  }
-
-  mul(w, h) {
-    const me = this;
-    me.width *= w;
-    me.height *= h;
-    me.children.forEach(child => {
-      child.mul(w, h);
-    });
-  }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = Node;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -629,29 +637,30 @@ class WrappedTree {
   }
 }
 
-WrappedTree.fromNode = root => {
+WrappedTree.fromNode = (root, isHorizontal) => {
   if (!root) return null;
   const children = [];
   root.children.forEach(child => {
-    children.push(WrappedTree.fromNode(child));
+    children.push(WrappedTree.fromNode(child, isHorizontal));
   });
+  if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
   return new WrappedTree(root.width, root.height, root.y, children);
 };
 
 /* harmony default export */ __webpack_exports__["a"] = WrappedTree;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(3);
 
 
 class Layout {
-  constructor(root, extraEdges) {
+  constructor(root, options = {}, extraEdges = []) {
     const me = this;
-    me.root = new __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__["a" /* default */](root);
+    me.root = new __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__["a" /* default */](root, options);
     me.extraEdges = extraEdges;
   }
 
@@ -667,208 +676,216 @@ class Layout {
 /* harmony default export */ __webpack_exports__["a"] = Layout;
 
 /***/ }),
-/* 5 */,
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__hierarchy_wrapped_tree__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(4);
 
 
-
-
-function convertBack(converted /* Tree */, root /* TreeNode */) {
-  root.y = converted.y;
-  converted.c.forEach((child, i) => {
-    convertBack(child, root.children[i]);
-  });
-}
-
-function firstWalk(t) {
-  if (t.cs === 0) {
-    setExtremes(t);
-    return;
-  }
-  firstWalk(t.c[0]);
-  let ih = updateIYL(bottom(t.c[0].el), 0, null);
-  for (let i = 1; i < t.cs; i++) {
-    firstWalk(t.c[i]);
-    const minX = bottom(t.c[i].er);
-    separate(t, i, ih);
-    ih = updateIYL(minX, i, ih);
-  }
-  positionRoot(t);
-  setExtremes(t);
-}
-
-function setExtremes(t) {
-  if (t.cs === 0) {
-    t.el = t;
-    t.er = t;
-    t.msel = t.mser = 0;
+// node utils
+function moveRight(node, move, isHorizontal) {
+  if (isHorizontal) {
+    node.y += move;
   } else {
-    t.el = t.c[0].el;
-    t.msel = t.c[0].msel;
-    t.er = t.c[t.cs - 1].er;
-    t.mser = t.c[t.cs - 1].mser;
+    node.x += move;
   }
-}
-
-function separate(t, i, ih) {
-  let sr = t.c[i - 1];
-  let mssr = sr.mod;
-  let cl = t.c[i];
-  let mscl = cl.mod;
-  while (sr != null && cl != null) {
-    if (bottom(sr) > ih.lowX) ih = ih.nxt;
-    const dist = mssr + sr.prelim + sr.h - (mscl + cl.prelim);
-    if (dist > 0) {
-      mscl += dist;
-      moveSubtree(t, i, ih.index, dist);
-    }
-    const sy = bottom(sr);
-    const cy = bottom(cl);
-    if (sy <= cy) {
-      sr = nextRightContour(sr);
-      if (sr != null) mssr += sr.mod;
-    }
-    if (sy >= cy) {
-      cl = nextLeftContour(cl);
-      if (cl != null) mscl += cl.mod;
-    }
-  }
-  if (sr === null && cl != null) {
-    setLeftThread(t, i, cl, mscl);
-  } else if (sr != null && cl === null) {
-    setRightThread(t, i, sr, mssr);
-  }
-}
-
-function moveSubtree(t, i, si, dist) {
-  t.c[i].mod += dist;
-  t.c[i].msel += dist;
-  t.c[i].mser += dist;
-  distributeExtra(t, i, si, dist);
-}
-
-function nextLeftContour(t) {
-  return t.cs === 0 ? t.tl : t.c[0];
-}
-
-function nextRightContour(t) {
-  return t.cs === 0 ? t.tr : t.c[t.cs - 1];
-}
-
-function bottom(t) {
-  return t.x + t.w;
-}
-
-function setLeftThread(t, i, cl, modsumcl) {
-  const li = t.c[0].el;
-  li.tl = cl;
-  const diff = modsumcl - cl.mod - t.c[0].msel;
-  li.mod += diff;
-  li.prelim -= diff;
-  t.c[0].el = t.c[i].el;
-  t.c[0].msel = t.c[i].msel;
-}
-
-function setRightThread(t, i, sr, modsumsr) {
-  const ri = t.c[i].er;
-  ri.tr = sr;
-  const diff = modsumsr - sr.mod - t.c[i].mser;
-  ri.mod += diff;
-  ri.prelim -= diff;
-  t.c[i].er = t.c[i - 1].er;
-  t.c[i].mser = t.c[i - 1].mser;
-}
-
-function positionRoot(t) {
-  t.prelim = (t.c[0].prelim + t.c[0].mod + t.c[t.cs - 1].mod + t.c[t.cs - 1].prelim + t.c[t.cs - 1].h) / 2 - t.h / 2;
-}
-
-function secondWalk(t, modsum) {
-  modsum += t.mod;
-  t.y = t.prelim + modsum;
-  addChildSpacing(t);
-  for (let i = 0; i < t.cs; i++) {
-    secondWalk(t.c[i], modsum);
-  }
-}
-
-function distributeExtra(t, i, si, dist) {
-  if (si !== i - 1) {
-    const nr = i - si;
-    t.c[si + 1].shift += dist / nr;
-    t.c[i].shift -= dist / nr;
-    t.c[i].change -= dist - dist / nr;
-  }
-}
-
-function addChildSpacing(t) {
-  let d = 0;
-  let modsumdelta = 0;
-  for (let i = 0; i < t.cs; i++) {
-    d += t.c[i].shift;
-    modsumdelta += d + t.c[i].change;
-    t.c[i].mod += modsumdelta;
-  }
-}
-
-function updateIYL(minX, index, ih) {
-  while (ih != null && minX >= ih.lowX) {
-    ih = ih.nxt;
-  }
-  return {
-    minX,
-    index,
-    nxt: ih
-  };
-}
-
-function moveRight(node, move) {
-  node.y += move;
   node.children.forEach(child => {
-    moveRight(child, move);
+    moveRight(child, move, isHorizontal);
   });
 }
 
-function getMinY(node) {
-  let res = node.y;
+function getMin(node, isHorizontal) {
+  let res = isHorizontal ? node.y : node.x;
   node.children.forEach(child => {
-    res = Math.min(getMinY(child), res);
+    res = Math.min(getMin(child, isHorizontal), res);
   });
   return res;
 }
 
-function normalizeY(node) {
-  const minY = getMinY(node);
-  moveRight(node, -minY);
+function normalize(node, isHorizontal) {
+  const min = getMin(node, isHorizontal);
+  moveRight(node, -min, isHorizontal);
 }
 
-function layer(node, d = 0) {
-  node.x = d;
-  d += node.width;
-  node.children.forEach(child => {
-    layer(child, d);
+function convertBack(converted /* Tree */, root /* TreeNode */, isHorizontal) {
+  if (isHorizontal) {
+    root.y = converted.x;
+  } else {
+    root.x = converted.x;
+  }
+  converted.c.forEach((child, i) => {
+    convertBack(child, root.children[i], isHorizontal);
   });
 }
 
-class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
-  doLayout() {
-    const root = this.root;
-    const wt = __WEBPACK_IMPORTED_MODULE_1__hierarchy_wrapped_tree__["a" /* default */].fromNode(root);
-    layer(root);
-    firstWalk(wt);
-    secondWalk(wt, 0);
-    convertBack(wt, root);
-    normalizeY(root);
-    return root;
+function layer(node, isHorizontal, d = 0) {
+  if (isHorizontal) {
+    node.x = d;
+    d += node.width;
+  } else {
+    node.y = d;
+    d += node.height;
   }
+  node.children.forEach(child => {
+    layer(child, isHorizontal, d);
+  });
 }
 
-/* harmony default export */ __webpack_exports__["a"] = RightLogical;
+/* harmony default export */ __webpack_exports__["a"] = (root, isHorizontal) => {
+  function firstWalk(t) {
+    if (t.cs === 0) {
+      setExtremes(t);
+      return;
+    }
+    firstWalk(t.c[0]);
+    let ih = updateIYL(bottom(t.c[0].el), 0, null);
+    for (let i = 1; i < t.cs; ++i) {
+      firstWalk(t.c[i]);
+      const min = bottom(t.c[i].er);
+      separate(t, i, ih);
+      ih = updateIYL(min, i, ih);
+    }
+    positionRoot(t);
+    setExtremes(t);
+  }
+
+  function setExtremes(t) {
+    if (t.cs === 0) {
+      t.el = t;
+      t.er = t;
+      t.msel = t.mser = 0;
+    } else {
+      t.el = t.c[0].el;
+      t.msel = t.c[0].msel;
+      t.er = t.c[t.cs - 1].er;
+      t.mser = t.c[t.cs - 1].mser;
+    }
+  }
+
+  function separate(t, i, ih) {
+    let sr = t.c[i - 1];
+    let mssr = sr.mod;
+    let cl = t.c[i];
+    let mscl = cl.mod;
+    while (sr != null && cl != null) {
+      if (bottom(sr) > ih.low) ih = ih.nxt;
+      const dist = mssr + sr.prelim + sr.w - (mscl + cl.prelim);
+      if (dist > 0) {
+        mscl += dist;
+        moveSubtree(t, i, ih.index, dist);
+      }
+      const sy = bottom(sr);
+      const cy = bottom(cl);
+      if (sy <= cy) {
+        sr = nextRightContour(sr);
+        if (sr != null) mssr += sr.mod;
+      }
+      if (sy >= cy) {
+        cl = nextLeftContour(cl);
+        if (cl != null) mscl += cl.mod;
+      }
+    }
+    if (!sr && !!cl) {
+      setLeftThread(t, i, cl, mscl);
+    } else if (!!sr && !cl) {
+      setRightThread(t, i, sr, mssr);
+    }
+  }
+
+  function moveSubtree(t, i, si, dist) {
+    t.c[i].mod += dist;
+    t.c[i].msel += dist;
+    t.c[i].mser += dist;
+    distributeExtra(t, i, si, dist);
+  }
+
+  function nextLeftContour(t) {
+    return t.cs === 0 ? t.tl : t.c[0];
+  }
+
+  function nextRightContour(t) {
+    return t.cs === 0 ? t.tr : t.c[t.cs - 1];
+  }
+
+  function bottom(t) {
+    return t.y + t.h;
+  }
+
+  function setLeftThread(t, i, cl, modsumcl) {
+    const li = t.c[0].el;
+    li.tl = cl;
+    const diff = modsumcl - cl.mod - t.c[0].msel;
+    li.mod += diff;
+    li.prelim -= diff;
+    t.c[0].el = t.c[i].el;
+    t.c[0].msel = t.c[i].msel;
+  }
+
+  function setRightThread(t, i, sr, modsumsr) {
+    const ri = t.c[i].er;
+    ri.tr = sr;
+    const diff = modsumsr - sr.mod - t.c[i].mser;
+    ri.mod += diff;
+    ri.prelim -= diff;
+    t.c[i].er = t.c[i - 1].er;
+    t.c[i].mser = t.c[i - 1].mser;
+  }
+
+  function positionRoot(t) {
+    t.prelim = (t.c[0].prelim + t.c[0].mod + t.c[t.cs - 1].mod + t.c[t.cs - 1].prelim + t.c[t.cs - 1].w) / 2 - t.w / 2;
+  }
+
+  function secondWalk(t, modsum) {
+    modsum += t.mod;
+    t.x = t.prelim + modsum;
+    addChildSpacing(t);
+    for (let i = 0; i < t.cs; i++) {
+      secondWalk(t.c[i], modsum);
+    }
+  }
+
+  function distributeExtra(t, i, si, dist) {
+    if (si !== i - 1) {
+      const nr = i - si;
+      t.c[si + 1].shift += dist / nr;
+      t.c[i].shift -= dist / nr;
+      t.c[i].change -= dist - dist / nr;
+    }
+  }
+
+  function addChildSpacing(t) {
+    let d = 0;
+    let modsumdelta = 0;
+    for (let i = 0; i < t.cs; i++) {
+      d += t.c[i].shift;
+      modsumdelta += d + t.c[i].change;
+      t.c[i].mod += modsumdelta;
+    }
+  }
+
+  function updateIYL(low, index, ih) {
+    while (ih !== null && low >= ih.low) {
+      ih = ih.nxt;
+    }
+    return {
+      low,
+      index,
+      nxt: ih
+    };
+  }
+
+  // do layout
+  layer(root, isHorizontal);
+  const wt = __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__["a" /* default */].fromNode(root, isHorizontal);
+  console.log(wt);
+  firstWalk(wt);
+  secondWalk(wt, 0);
+  convertBack(wt, root, isHorizontal);
+  normalize(root, isHorizontal);
+
+  return root;
+};
 
 /***/ }),
 /* 7 */,
@@ -876,40 +893,42 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(6);
+
+
+
+class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+  doLayout() {
+    const root = this.root;
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__["a" /* default */])(root, true);
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = RightLogical;
+
+/***/ }),
+/* 9 */,
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_layouts_right_logical__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_layouts_right_logical__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__color_index__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_generate_tree__ = __webpack_require__(1);
 
 
 
-const layout = new __WEBPACK_IMPORTED_MODULE_0__lib_layouts_right_logical__["a" /* default */]({
-  'name': 'root',
+
+const count = 20;
+const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__data_generate_tree__["a" /* default */])(count);
+Object.assign(root, {
   'height': 80,
   'width': 300,
-  'hgap': 100,
-  'children': [{
-    'name': 'child-1',
-    'children': [{
-      'name': 'child-1-1xxxxxxxxxxxxxxxxxxxxx'
-    }, {
-      'name': 'child-1-2yy',
-      'children': [{
-        'name': 'child-1-2-1'
-      }]
-    }]
-  }, {
-    'name': 'child-2'
-  }, {
-    'name': 'child-3'
-  }, {
-    'name': 'child-4ooooooooooooo',
-    'children': [{
-      'name': 'child-4-1qqqqqqqqqqqq'
-    }, {
-      'name': 'child-4-2'
-    }]
-  }]
+  'hgap': 100
 });
+const layout = new __WEBPACK_IMPORTED_MODULE_0__lib_layouts_right_logical__["a" /* default */](root);
 
 const t0 = window.performance.now();
 
@@ -945,7 +964,7 @@ function drawBezierCurveToChild(n, c, ctx) {
   const beginY = roundInt(n.y + n.height / 2);
   const endX = roundInt(c.x + c.hgap);
   const endY = roundInt(c.y + c.height / 2);
-  console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`);
+  // console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
   ctx.strokeStyle = lineColor;
   ctx.beginPath();
   ctx.moveTo(beginX, beginY);
@@ -976,7 +995,7 @@ function drawLink(node, ctx) {
 
 const t2 = window.performance.now();
 
-console.log(`there are 7 tree nodes`);
+console.log(`there are ${count} tree nodes`);
 console.log(`layout algorithm took ${t1 - t0}ms, and drawing took ${t2 - t1}ms.`);
 
 if (canvas.getContext) {
