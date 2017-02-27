@@ -1,8 +1,8 @@
 {
   "name": "mindmap-layouts",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "mindmap layouts",
-  "main": "index.js",
+  "main": "dist/mindmap-layouts.js",
   "scripts": {
     "publish-all": "npm run push-all && npm publish && npm run sync-cnpm",
     "push-all": "npm run push-master && npm run push-tags && npm run push-gh-pages",
