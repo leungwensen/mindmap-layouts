@@ -1,6 +1,7 @@
-import DownwardOrganizationalLayout from '../../lib/layouts/downward-organizational'
 import Color from './color/index'
 import generateTree from './data/generate-tree'
+
+const DownwardOrganizationalLayout = MindmapLayouts.DownloadOrganizational
 
 const count = 20
 const root = generateTree(count)

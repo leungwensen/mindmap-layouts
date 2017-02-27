@@ -10,6 +10,7 @@
     "standard"
   ],
   "globals": {
+    "MindmapLayouts": true
   },
   "rules": {
     "no-cond-assign": 0,

@@ -61,7 +61,18 @@ automatic layout algorithms for mindmaps
 
 Checkout more about .xmind file: [xmind-sdk-javascript](https://github.com/leungwensen/xmind-sdk-javascript)
 
+## Install
+
+```shell
+$ npm install mindmap-layouts --save
+```
+
 ## API
+
+```javascript
+const MindmapLayouts = require('mindmap-layouts');
+
+```
 
 ## demos
 

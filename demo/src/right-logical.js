@@ -1,6 +1,7 @@
-import RightLogicalLayout from '../../lib/layouts/right-logical'
 import Color from './color/index'
 import generateTree from './data/generate-tree'
+
+const RightLogicalLayout = MindmapLayouts.RightLogical
 
 const count = 20
 const root = generateTree(count)
@@ -9,6 +10,7 @@ Object.assign(root, {
   'width': 300,
   'hgap': 100
 })
+
 const layout = new RightLogicalLayout(root)
 
 const t0 = window.performance.now()

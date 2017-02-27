@@ -77,7 +77,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -179,7 +182,7 @@ class Node {
 /* harmony default export */ __webpack_exports__["a"] = Node;
 
 /***/ }),
-/* 1 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -236,11 +239,11 @@ WrappedTree.fromNode = (root, isHorizontal) => {
 /* harmony default export */ __webpack_exports__["a"] = WrappedTree;
 
 /***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(3);
 
 
 class Layout {
@@ -273,7 +276,7 @@ class Layout {
         y: node.y
       });
     });
-    // while
+    return nodes;
   }
 
   getEdges() {
@@ -290,17 +293,18 @@ class Layout {
       });
     });
     edges.concat(extraEdges);
+    return edges;
   }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = Layout;
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(4);
 
 
 // node utils
@@ -508,14 +512,26 @@ function layer(node, isHorizontal, d = 0) {
 };
 
 /***/ }),
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(3);
+/* unused harmony reexport Node */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(4);
+/* unused harmony reexport WrappedTree */
+
+
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(6);
 
 
 
@@ -529,12 +545,12 @@ class DownloadOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /
 /* harmony default export */ __webpack_exports__["a"] = DownloadOrganizational;
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(6);
 
 
 
@@ -548,21 +564,6 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = RightLogical;
 
 /***/ }),
-/* 8 */,
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(0);
-/* unused harmony reexport Node */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(1);
-/* unused harmony reexport WrappedTree */
-
-
-
-
-
-/***/ }),
 /* 10 */,
 /* 11 */,
 /* 12 */
@@ -570,11 +571,11 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__ = __webpack_require__(9);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "RightLogical", function() { return __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__ = __webpack_require__(8);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DownloadOrganizational", function() { return __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hierarchy_index__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hierarchy_index__ = __webpack_require__(7);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Hierarchy", function() { return __WEBPACK_IMPORTED_MODULE_2__hierarchy_index__["default"]; });
 
 
