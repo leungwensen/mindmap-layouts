@@ -104,6 +104,9 @@ const DEFAULT_OPTIONS = {
   getVGap(d) {
     return d.vgap || DEFAULT_GAP;
   },
+  getId(d) {
+    return d.id || d.name;
+  },
   getChildren(d) {
     return d.children;
   },
@@ -131,6 +134,7 @@ class Node {
     me.data = data;
     me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
     me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
+    me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
     me.x = me.y = 0;
     me.depth = 0;
     const nodes = [me];
@@ -265,7 +269,7 @@ class Layout {
       countByDepth[node.depth] = countByDepth[node.depth] || 0;
       countByDepth[node.depth]++;
       nodes.push({
-        id: node.data.id || `__node-${node.depth}-${countByDepth[node.depth]}`,
+        id: node.id,
         centX: node.x + node.width / 2,
         centY: node.y + node.height / 2,
         data: node.data,
