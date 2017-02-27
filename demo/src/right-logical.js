@@ -1,4 +1,4 @@
-import Color from './color/index'
+import Color from 'zero-colors'
 import generateTree from './data/generate-tree'
 
 const RightLogicalLayout = MindmapLayouts.RightLogical
@@ -34,14 +34,11 @@ function randomInt (n) {
 function randomColor () {
   return `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`
 }
-function rgba2str (rgba) {
-  return `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3]})`
-}
 function roundInt (num) {
   return Math.round(num)
 }
 
-const lineColor = rgba2str(new Color(randomColor()).toGrey().toRgba())
+const lineColor = new Color(randomColor()).toGrey().toString(true)
 function drawBezierCurveToChild (n, c, ctx) {
   const beginX = roundInt(n.x + n.width - n.hgap)
   const beginY = roundInt(n.y + n.height / 2)
@@ -65,9 +62,13 @@ function drawNode (node, ctx) {
   const y = roundInt(node.y + node.vgap)
   const width = roundInt(node.width - node.hgap * 2)
   const height = roundInt(node.height - node.vgap * 2)
-  ctx.fillStyle = rgba2str(color.toRgba())
+  // const x = roundInt(node.x)
+  // const y = roundInt(node.y)
+  // const width = roundInt(node.width)
+  // const height = roundInt(node.height)
+  ctx.fillStyle = color.toString()
   ctx.fillRect(x, y, width, height)
-  ctx.strokeStyle = rgba2str(color.toGrey().toRgba())
+  ctx.strokeStyle = color.toGrey().toString()
   ctx.strokeRect(x, y, width, height)
   node.children.forEach(child => {
     drawNode(child, ctx)

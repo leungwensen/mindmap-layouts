@@ -81,8 +81,51 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__named__ = __webpack_require__(2);
+const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const lettersLen = letters.length;
 
+function roundRandomInt(n) {
+  return Math.round(Math.random() * n);
+}
+function randomString(n) {
+  let res = '';
+  for (let i = 0; i < n; i++) {
+    res += letters[roundRandomInt(lettersLen)];
+  }
+  return res;
+}
+
+function generateRoot() {
+  return {
+    name: randomString(roundRandomInt(10)),
+    children: []
+  };
+}
+
+function generateNode(root, child) {
+  const rand = roundRandomInt(root.children.length);
+  if (rand === root.children.length) {
+    root.children.push(child);
+  } else {
+    generateNode(root.children[rand], child);
+  }
+}
+
+function randomNode(maxSize) {
+  const root = generateRoot();
+  for (let i = 0; i < maxSize; i++) {
+    generateNode(root, generateRoot());
+  }
+  return root;
+}
+
+/* harmony default export */ __webpack_exports__["a"] = randomNode;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const namedColor = __webpack_require__(2);
 
 const round = Math.round;
 
@@ -232,7 +275,7 @@ class Color {
 }
 
 Object.assign(Color, {
-  hexByName: __WEBPACK_IMPORTED_MODULE_0__named__["a" /* default */],
+  hexByName: namedColor,
 
   makeGrey( /* Number */g, /* Number? */a) {
     return Color.fromArray([g, g, g, a]);
@@ -302,61 +345,15 @@ Object.assign(Color, {
   }
 });
 
-Color.named = Color.namedColor = __WEBPACK_IMPORTED_MODULE_0__named__["a" /* default */];
+Color.named = Color.namedColor = namedColor;
 
-/* harmony default export */ __webpack_exports__["a"] = Color;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const lettersLen = letters.length;
-
-function roundRandomInt(n) {
-  return Math.round(Math.random() * n);
-}
-function randomString(n) {
-  let res = '';
-  for (let i = 0; i < n; i++) {
-    res += letters[roundRandomInt(lettersLen)];
-  }
-  return res;
-}
-
-function generateRoot() {
-  return {
-    name: randomString(roundRandomInt(10)),
-    children: []
-  };
-}
-
-function generateNode(root, child) {
-  const rand = roundRandomInt(root.children.length);
-  if (rand === root.children.length) {
-    root.children.push(child);
-  } else {
-    generateNode(root.children[rand], child);
-  }
-}
-
-function randomNode(maxSize) {
-  const root = generateRoot();
-  for (let i = 0; i < maxSize; i++) {
-    generateNode(root, generateRoot());
-  }
-  return root;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = randomNode;
+module.exports = Color;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-const colors = {
+module.exports = {
   aliceblue: '#f0f8ff',
   antiquewhite: '#faebd7',
   aqua: '#00ffff',
@@ -508,8 +505,6 @@ const colors = {
   yellowgreen: '#9acd32'
 };
 
-/* harmony default export */ __webpack_exports__["a"] = colors;
-
 /***/ }),
 /* 3 */,
 /* 4 */,
@@ -523,8 +518,9 @@ const colors = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__color_index__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_generate_tree__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_generate_tree__ = __webpack_require__(0);
 
 
 
@@ -561,14 +557,11 @@ function randomInt(n) {
 function randomColor() {
   return `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
 }
-function rgba2str(rgba) {
-  return `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3]})`;
-}
 function roundInt(num) {
   return Math.round(num);
 }
 
-const lineColor = rgba2str(new __WEBPACK_IMPORTED_MODULE_0__color_index__["a" /* default */](randomColor()).toGrey().toRgba());
+const lineColor = new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(randomColor()).toGrey().toString();
 function drawBezierCurveToChild(n, c, ctx) {
   const beginX = roundInt(n.x + n.width / 2);
   const beginY = roundInt(n.y + n.height - n.vgap);
@@ -582,15 +575,15 @@ function drawBezierCurveToChild(n, c, ctx) {
   ctx.stroke();
 }
 function drawNode(node, ctx) {
-  const color = new __WEBPACK_IMPORTED_MODULE_0__color_index__["a" /* default */](randomColor());
+  const color = new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(randomColor());
   // console.log(color.toRgba());
   const x = roundInt(node.x + node.hgap);
   const y = roundInt(node.y + node.vgap);
   const width = roundInt(node.width - node.hgap * 2);
   const height = roundInt(node.height - node.vgap * 2);
-  ctx.fillStyle = rgba2str(color.toRgba());
+  ctx.fillStyle = color.toString(true);
   ctx.fillRect(x, y, width, height);
-  ctx.strokeStyle = rgba2str(color.toGrey().toRgba());
+  ctx.strokeStyle = color.toGrey().toString();
   ctx.strokeRect(x, y, width, height);
   node.children.forEach(child => {
     drawNode(child, ctx);

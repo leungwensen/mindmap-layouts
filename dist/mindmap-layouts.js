@@ -84,231 +84,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-function getNodeBoundingBox(n, bb) {
-  bb.width = Math.max(bb.width, n.x + n.width);
-  bb.height = Math.max(bb.height, n.y + n.height);
-  n.children.forEach(child => {
-    getNodeBoundingBox(child, bb);
-  });
-  return bb;
-}
-
-const PEM = 18;
-const DEFAULT_HEIGHT = PEM * 2;
-const DEFAULT_GAP = PEM;
-
-const DEFAULT_OPTIONS = {
-  getHGap(d) {
-    return d.hgap || DEFAULT_GAP;
-  },
-  getVGap(d) {
-    return d.vgap || DEFAULT_GAP;
-  },
-  getId(d) {
-    return d.id || d.name;
-  },
-  getChildren(d) {
-    return d.children;
-  },
-  getHeight(d) {
-    return d.height || DEFAULT_HEIGHT;
-  },
-  getWidth(d) {
-    const name = d.name || ' ';
-    return d.width || name.split('').length * PEM;
-  }
-};
-
-function fallbackExecuteOnData(func1, func2, data) {
-  if (func1) return func1(data);
-  return func2(data);
-}
-
-class Node {
-  constructor(data, options = {}) {
-    const me = this;
-    me.vgap = me.hgap = 0;
-    if (data instanceof Node) return data;
-    const hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
-    const vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
-    me.data = data;
-    me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
-    me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
-    me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
-    me.x = me.y = 0;
-    me.depth = 0;
-    const nodes = [me];
-    let node;
-    while (node = nodes.pop()) {
-      const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
-      const length = children ? children.length : 0;
-      node.children = [];
-      if (children && length) {
-        for (let i = length - 1; i >= 0; --i) {
-          const child = new Node(children[i], options);
-          node.children.push(child);
-          nodes.push(child);
-          child.parent = node;
-          child.depth = node.depth + 1;
-        }
-      }
-    }
-    me.addGap(hgap, vgap);
-  }
-
-  eachNode(callback) {
-    const me = this;
-    let nodes = [me];
-    let current = null;
-    while (current = nodes.pop()) {
-      callback(current);
-      nodes = nodes.concat(current.children);
-    }
-  }
-
-  getBoundingBox() {
-    const bb = {
-      width: 0,
-      height: 0
-    };
-    return getNodeBoundingBox(this, bb);
-  }
-
-  addGap(hgap, vgap) {
-    const me = this;
-    me.hgap += hgap;
-    me.vgap += vgap;
-    me.width += 2 * hgap;
-    me.height += 2 * vgap;
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = Node;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class WrappedTree {
-
-  // Array of children and number of children.
-
-
-  // Sum of modifiers at the extreme nodes.
-
-
-  // Extreme left and right nodes.
-
-
-  // Left and right thread.
-
-  // Width and height.
-  constructor(w, h, y, c = []) {
-    this.w = 0;
-    this.h = 0;
-    this.x = 0;
-    this.y = 0;
-    this.prelim = 0;
-    this.mod = 0;
-    this.shift = 0;
-    this.change = 0;
-    this.tl = null;
-    this.tr = null;
-    this.el = null;
-    this.er = null;
-    this.msel = 0;
-    this.mser = 0;
-    this.c = [];
-    this.cs = 0;
-
-    this.w = w;
-    this.h = h;
-    this.y = y;
-    this.c = c;
-    this.cs = c.length;
-  }
-}
-
-WrappedTree.fromNode = (root, isHorizontal) => {
-  if (!root) return null;
-  const children = [];
-  root.children.forEach(child => {
-    children.push(WrappedTree.fromNode(child, isHorizontal));
-  });
-  if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
-  return new WrappedTree(root.width, root.height, root.y, children);
-};
-
-/* harmony default export */ __webpack_exports__["a"] = WrappedTree;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(3);
-
-
-class Layout {
-  constructor(root, options = {}, extraEdges = []) {
-    const me = this;
-    me.root = new __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__["a" /* default */](root, options);
-    me.extraEdges = extraEdges;
-  }
-
-  doLayout() {
-    throw new Error('please override this method');
-  }
-
-  getNodes() {
-    const root = this.root;
-    const nodes = [];
-    let countByDepth = {};
-    root.eachNode(node => {
-      countByDepth[node.depth] = countByDepth[node.depth] || 0;
-      countByDepth[node.depth]++;
-      nodes.push({
-        id: node.id,
-        centX: node.x + node.width / 2,
-        centY: node.y + node.height / 2,
-        data: node.data,
-        depth: node.depth,
-        height: node.height,
-        width: node.width,
-        x: node.x,
-        y: node.y
-      });
-    });
-    return nodes;
-  }
-
-  getEdges() {
-    const me = this;
-    const extraEdges = me.extraEdges;
-    const root = this.root;
-    const edges = [];
-    root.eachNode(node => {
-      node.children.forEach(child => {
-        edges.push({
-          source: node.id,
-          target: child.id
-        });
-      });
-    });
-    edges.concat(extraEdges);
-    return edges;
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = Layout;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(5);
 
 
 // node utils
@@ -516,13 +292,245 @@ function layer(node, isHorizontal, d = 0) {
 };
 
 /***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function getNodeBoundingBox(n, bb) {
+  bb.width = Math.max(bb.width, n.x + n.width);
+  bb.height = Math.max(bb.height, n.y + n.height);
+  n.children.forEach(child => {
+    getNodeBoundingBox(child, bb);
+  });
+  return bb;
+}
+
+const PEM = 18;
+const DEFAULT_HEIGHT = PEM * 2;
+const DEFAULT_GAP = PEM;
+
+const DEFAULT_OPTIONS = {
+  getId(d) {
+    return d.id || d.name;
+  },
+  getHGap(d) {
+    return d.hgap || DEFAULT_GAP;
+  },
+  getVGap(d) {
+    return d.vgap || DEFAULT_GAP;
+  },
+  getChildren(d) {
+    return d.children;
+  },
+  getHeight(d) {
+    return d.height || DEFAULT_HEIGHT;
+  },
+  getWidth(d) {
+    const name = d.name || ' ';
+    return d.width || name.split('').length * PEM;
+  }
+};
+
+function fallbackExecuteOnData(func1, func2, data) {
+  if (func1) return func1(data);
+  return func2(data);
+}
+
+class Node {
+  constructor(data, options = {}) {
+    const me = this;
+    me.vgap = me.hgap = 0;
+    if (data instanceof Node) return data;
+    const hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
+    const vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
+    me.data = data;
+    me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
+    me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
+    me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
+    me.x = me.y = 0;
+    me.depth = 0;
+    const nodes = [me];
+    let node;
+    while (node = nodes.pop()) {
+      const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
+      const length = children ? children.length : 0;
+      node.children = [];
+      if (children && length) {
+        for (let i = length - 1; i >= 0; --i) {
+          const child = new Node(children[i], options);
+          node.children.push(child);
+          nodes.push(child);
+          child.parent = node;
+          child.depth = node.depth + 1;
+        }
+      }
+    }
+    me.addGap(hgap, vgap);
+  }
+
+  addGap(hgap, vgap) {
+    const me = this;
+    me.hgap += hgap;
+    me.vgap += vgap;
+    me.width += 2 * hgap;
+    me.height += 2 * vgap;
+  }
+
+  eachNode(callback) {
+    const me = this;
+    let nodes = [me];
+    let current = null;
+    while (current = nodes.pop()) {
+      callback(current);
+      nodes = nodes.concat(current.children);
+    }
+  }
+
+  getBoundingBox() {
+    const bb = {
+      width: 0,
+      height: 0
+    };
+    return getNodeBoundingBox(this, bb);
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = Node;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class WrappedTree {
+
+  // Array of children and number of children.
+
+
+  // Sum of modifiers at the extreme nodes.
+
+
+  // Extreme left and right nodes.
+
+
+  // Left and right thread.
+
+  // Width and height.
+  constructor(w, h, y, c = []) {
+    this.w = 0;
+    this.h = 0;
+    this.x = 0;
+    this.y = 0;
+    this.prelim = 0;
+    this.mod = 0;
+    this.shift = 0;
+    this.change = 0;
+    this.tl = null;
+    this.tr = null;
+    this.el = null;
+    this.er = null;
+    this.msel = 0;
+    this.mser = 0;
+    this.c = [];
+    this.cs = 0;
+
+    this.w = w;
+    this.h = h;
+    this.y = y;
+    this.c = c;
+    this.cs = c.length;
+  }
+}
+
+WrappedTree.fromNode = (root, isHorizontal) => {
+  if (!root) return null;
+  const children = [];
+  root.children.forEach(child => {
+    children.push(WrappedTree.fromNode(child, isHorizontal));
+  });
+  if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
+  return new WrappedTree(root.width, root.height, root.y, children);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = WrappedTree;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(4);
+
+
+class Layout {
+  constructor(root, options = {}, extraEdges = []) {
+    const me = this;
+    me.root = new __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__["a" /* default */](root, options);
+    me.extraEdges = extraEdges;
+  }
+
+  doLayout() {
+    throw new Error('please override this method');
+  }
+
+  getNodes() {
+    const root = this.root;
+    const nodes = [];
+    let countByDepth = {};
+    root.eachNode(node => {
+      countByDepth[node.depth] = countByDepth[node.depth] || 0;
+      countByDepth[node.depth]++;
+      nodes.push({
+        // origin data
+        data: node.data,
+        id: node.id,
+        // position
+        x: node.x,
+        y: node.y,
+        centX: node.x + node.width / 2,
+        centY: node.y + node.height / 2,
+        // size
+        hgap: node.hgap,
+        vgap: node.vgap,
+        height: node.height,
+        width: node.width,
+        actualHeight: node.height - node.vgap * 2,
+        actualWidth: node.width - node.hgap * 2,
+        // depth
+        depth: node.depth
+      });
+    });
+    return nodes;
+  }
+
+  getEdges() {
+    const me = this;
+    const extraEdges = me.extraEdges;
+    const root = this.root;
+    const edges = [];
+    root.eachNode(node => {
+      node.children.forEach(child => {
+        edges.push({
+          source: node.id,
+          target: child.id
+        });
+      });
+    });
+    edges.concat(extraEdges);
+    return edges;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = Layout;
+
+/***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(4);
 /* unused harmony reexport Node */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(5);
 /* unused harmony reexport WrappedTree */
 
 
@@ -534,15 +542,15 @@ function layer(node, isHorizontal, d = 0) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(3);
 
 
 
 class DownloadOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
   doLayout() {
     const root = this.root;
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__["a" /* default */])(root, false);
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, false);
   }
 }
 
@@ -553,15 +561,15 @@ class DownloadOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(3);
 
 
 
 class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
   doLayout() {
     const root = this.root;
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__non_layered_tidy_tree__["a" /* default */])(root, true);
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, true);
   }
 }
 
