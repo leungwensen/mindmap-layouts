@@ -895,6 +895,11 @@ function render() {
 }
 
 formNode.addEventListener('change', render);
+formNode.addEventListener('submit', e => {
+  e.preventDefault();
+  render();
+  return false;
+});
 window.onresize = () => {
   setCanvasSize();
   render();
