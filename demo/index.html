@@ -4,38 +4,87 @@
   <meta charset="UTF-8">
   <title>demos</title>
   <style>
-    .container {
-      width: 800px;
-      margin: 1em auto;
-    }
-    ul, li {
+    * {
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
-    li {
-      display: inline-block;
-      list-style: none;
+
+    html, body {
+      width: 100%;
+      height: 100%;
     }
-    li a {
-      display: block;
-      text-decoration: none;
-      margin: 1em 2em;
+
+    aside {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: .5em;
+      border: 1px solid gray;
+      background-color: white;
     }
-    li:hover {
-      background: lightgreen;
+
+    form {
+      margin-bottom: .5em;
+    }
+
+    table, table thead {
+      width: 100%;
+      border: 1px solid #cbcbcb;
+      empty-cells: show;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    table td, table th {
+      border-left: 1px solid #cbcbcb;
+    }
+    table td {
+      text-align: right;
+    }
+
+    .container {
+      text-align: center;
+      height: 100%;
+      width: 100%;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <ul>
-    <li>
-      <a href="./downward-organizational.html">downward organizational layout</a>
-    </li>
-    <li>
-      <a href="./right-logical.html">right logical layout</a>
-    </li>
-  </ul>
+
+<aside>
+  <form id="layout-props" class="layout-props">
+    <input name="dataSize" type="number" min="1" value="30">
+    <select name="layoutType">
+      <option value="DownwardOrganizational">Downward Organizational</option>
+      <option value="UpwardOrganizational">Upward Organizational</option>
+      <option value="LeftLogical">Left Logical</option>
+      <option value="RightLogical">Right Logical</option>
+    </select>
+  </form>
+  <table>
+    <thead>
+    <tr>
+      <th>layout time(ms)</th>
+      <th>render time(ms)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td id="layout-time">0</td>
+      <td id="render-time">0</td>
+    </tr>
+    </tbody>
+  </table>
+</aside>
+<div class="container" id="container">
+  <canvas id="canvas"></canvas>
 </div>
+<script src="../dist/mindmap-layouts.js"></script>
+<script src="./dist/index.js"></script>
 </body>
 </html>

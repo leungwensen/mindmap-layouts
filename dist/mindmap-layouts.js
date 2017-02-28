@@ -73,18 +73,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */
+/******/ ({
+
+/***/ 20:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(23);
 
 
 // node utils
@@ -292,174 +290,12 @@ function layer(node, isHorizontal, d = 0) {
 };
 
 /***/ }),
-/* 4 */
+
+/***/ 21:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-function getNodeBoundingBox(n, bb) {
-  bb.width = Math.max(bb.width, n.x + n.width);
-  bb.height = Math.max(bb.height, n.y + n.height);
-  n.children.forEach(child => {
-    getNodeBoundingBox(child, bb);
-  });
-  return bb;
-}
-
-const PEM = 18;
-const DEFAULT_HEIGHT = PEM * 2;
-const DEFAULT_GAP = PEM;
-
-const DEFAULT_OPTIONS = {
-  getId(d) {
-    return d.id || d.name;
-  },
-  getHGap(d) {
-    return d.hgap || DEFAULT_GAP;
-  },
-  getVGap(d) {
-    return d.vgap || DEFAULT_GAP;
-  },
-  getChildren(d) {
-    return d.children;
-  },
-  getHeight(d) {
-    return d.height || DEFAULT_HEIGHT;
-  },
-  getWidth(d) {
-    const name = d.name || ' ';
-    return d.width || name.split('').length * PEM;
-  }
-};
-
-function fallbackExecuteOnData(func1, func2, data) {
-  if (func1) return func1(data);
-  return func2(data);
-}
-
-class Node {
-  constructor(data, options = {}) {
-    const me = this;
-    me.vgap = me.hgap = 0;
-    if (data instanceof Node) return data;
-    const hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
-    const vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
-    me.data = data;
-    me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
-    me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
-    me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
-    me.x = me.y = 0;
-    me.depth = 0;
-    const nodes = [me];
-    let node;
-    while (node = nodes.pop()) {
-      const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
-      const length = children ? children.length : 0;
-      node.children = [];
-      if (children && length) {
-        for (let i = length - 1; i >= 0; --i) {
-          const child = new Node(children[i], options);
-          node.children.push(child);
-          nodes.push(child);
-          child.parent = node;
-          child.depth = node.depth + 1;
-        }
-      }
-    }
-    me.addGap(hgap, vgap);
-  }
-
-  addGap(hgap, vgap) {
-    const me = this;
-    me.hgap += hgap;
-    me.vgap += vgap;
-    me.width += 2 * hgap;
-    me.height += 2 * vgap;
-  }
-
-  eachNode(callback) {
-    const me = this;
-    let nodes = [me];
-    let current = null;
-    while (current = nodes.pop()) {
-      callback(current);
-      nodes = nodes.concat(current.children);
-    }
-  }
-
-  getBoundingBox() {
-    const bb = {
-      width: 0,
-      height: 0
-    };
-    return getNodeBoundingBox(this, bb);
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = Node;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class WrappedTree {
-
-  // Array of children and number of children.
-
-
-  // Sum of modifiers at the extreme nodes.
-
-
-  // Extreme left and right nodes.
-
-
-  // Left and right thread.
-
-  // Width and height.
-  constructor(w, h, y, c = []) {
-    this.w = 0;
-    this.h = 0;
-    this.x = 0;
-    this.y = 0;
-    this.prelim = 0;
-    this.mod = 0;
-    this.shift = 0;
-    this.change = 0;
-    this.tl = null;
-    this.tr = null;
-    this.el = null;
-    this.er = null;
-    this.msel = 0;
-    this.mser = 0;
-    this.c = [];
-    this.cs = 0;
-
-    this.w = w;
-    this.h = h;
-    this.y = y;
-    this.c = c;
-    this.cs = c.length;
-  }
-}
-
-WrappedTree.fromNode = (root, isHorizontal) => {
-  if (!root) return null;
-  const children = [];
-  root.children.forEach(child => {
-    children.push(WrappedTree.fromNode(child, isHorizontal));
-  });
-  if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
-  return new WrappedTree(root.width, root.height, root.y, children);
-};
-
-/* harmony default export */ __webpack_exports__["a"] = WrappedTree;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(22);
 
 
 class Layout {
@@ -524,13 +360,207 @@ class Layout {
 /* harmony default export */ __webpack_exports__["a"] = Layout;
 
 /***/ }),
-/* 7 */
+
+/***/ 22:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(4);
+const PEM = 18;
+const DEFAULT_HEIGHT = PEM * 2;
+const DEFAULT_GAP = PEM;
+
+const DEFAULT_OPTIONS = {
+  getId(d) {
+    return d.id || d.name;
+  },
+  getHGap(d) {
+    return d.hgap || DEFAULT_GAP;
+  },
+  getVGap(d) {
+    return d.vgap || DEFAULT_GAP;
+  },
+  getChildren(d) {
+    return d.children;
+  },
+  getHeight(d) {
+    return d.height || DEFAULT_HEIGHT;
+  },
+  getWidth(d) {
+    const name = d.name || ' ';
+    return d.width || name.split('').length * PEM;
+  }
+};
+
+function fallbackExecuteOnData(func1, func2, data) {
+  if (func1) return func1(data);
+  return func2(data);
+}
+
+class Node {
+  constructor(data, options = {}) {
+    const me = this;
+    me.vgap = me.hgap = 0;
+    if (data instanceof Node) return data;
+    const hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
+    const vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
+    me.data = data;
+    me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
+    me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
+    me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
+    me.x = me.y = 0;
+    me.depth = 0;
+    const nodes = [me];
+    let node;
+    while (node = nodes.pop()) {
+      const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
+      const length = children ? children.length : 0;
+      node.children = [];
+      if (children && length) {
+        for (let i = length - 1; i >= 0; --i) {
+          const child = new Node(children[i], options);
+          node.children.push(child);
+          nodes.push(child);
+          child.parent = node;
+          child.depth = node.depth + 1;
+        }
+      }
+    }
+    me.addGap(hgap, vgap);
+  }
+
+  isRoot() {
+    return this.depth === 0;
+  }
+
+  addGap(hgap, vgap) {
+    const me = this;
+    me.hgap += hgap;
+    me.vgap += vgap;
+    me.width += 2 * hgap;
+    me.height += 2 * vgap;
+  }
+
+  eachNode(callback) {
+    const me = this;
+    let nodes = [me];
+    let current = null;
+    while (current = nodes.pop()) {
+      callback(current);
+      nodes = nodes.concat(current.children);
+    }
+  }
+
+  getBoundingBox() {
+    const bb = {
+      left: Number.MAX_VALUE,
+      top: Number.MAX_VALUE,
+      width: 0,
+      height: 0
+    };
+    this.eachNode(node => {
+      bb.left = Math.min(bb.left, node.x);
+      bb.top = Math.min(bb.top, node.y);
+      bb.width = Math.max(bb.width, node.x + node.width);
+      bb.height = Math.max(bb.height, node.y + node.height);
+    });
+    return bb;
+  }
+
+  translate(tx = 0, ty = 0) {
+    this.eachNode(node => {
+      node.x += tx;
+      node.y += ty;
+    });
+  }
+
+  right2left() {
+    const me = this;
+    const bb = me.getBoundingBox();
+    me.eachNode(node => {
+      node.x = node.x - (node.x - bb.left) * 2 - node.width;
+    });
+    me.translate(bb.width, 0);
+  }
+
+  down2up() {
+    const me = this;
+    const bb = me.getBoundingBox();
+    me.eachNode(node => {
+      node.y = node.y - (node.y - bb.top) * 2 - node.height;
+    });
+    me.translate(0, bb.height);
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = Node;
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class WrappedTree {
+
+  // Array of children and number of children.
+
+
+  // Sum of modifiers at the extreme nodes.
+
+
+  // Extreme left and right nodes.
+
+
+  // Left and right thread.
+
+  // Width and height.
+  constructor(w, h, y, c = []) {
+    this.w = 0;
+    this.h = 0;
+    this.x = 0;
+    this.y = 0;
+    this.prelim = 0;
+    this.mod = 0;
+    this.shift = 0;
+    this.change = 0;
+    this.tl = null;
+    this.tr = null;
+    this.el = null;
+    this.er = null;
+    this.msel = 0;
+    this.mser = 0;
+    this.c = [];
+    this.cs = 0;
+
+    this.w = w;
+    this.h = h;
+    this.y = y;
+    this.c = c;
+    this.cs = c.length;
+  }
+}
+
+WrappedTree.fromNode = (root, isHorizontal) => {
+  if (!root) return null;
+  const children = [];
+  root.children.forEach(child => {
+    children.push(WrappedTree.fromNode(child, isHorizontal));
+  });
+  if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
+  return new WrappedTree(root.width, root.height, root.y, children);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = WrappedTree;
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(22);
 /* unused harmony reexport Node */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(23);
 /* unused harmony reexport WrappedTree */
 
 
@@ -538,31 +568,55 @@ class Layout {
 
 
 /***/ }),
-/* 8 */
+
+/***/ 25:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(20);
 
 
 
-class DownloadOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class DownwardOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
   doLayout() {
     const root = this.root;
     return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, false);
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = DownloadOrganizational;
+/* harmony default export */ __webpack_exports__["a"] = DownwardOrganizational;
 
 /***/ }),
-/* 9 */
+
+/***/ 26:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(20);
+
+
+
+class LeftLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+  doLayout() {
+    const root = this.root;
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, true);
+    root.right2left();
+    return root;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = LeftLogical;
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(20);
 
 
 
@@ -576,19 +630,48 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = RightLogical;
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */
+
+/***/ 28:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(20);
+
+
+
+class UpwardOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+  doLayout() {
+    const root = this.root;
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, false);
+    root.down2up();
+    return root;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = UpwardOrganizational;
+
+/***/ }),
+
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__ = __webpack_require__(27);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "RightLogical", function() { return __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__ = __webpack_require__(8);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DownloadOrganizational", function() { return __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hierarchy_index__ = __webpack_require__(7);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Hierarchy", function() { return __WEBPACK_IMPORTED_MODULE_2__hierarchy_index__["default"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__ = __webpack_require__(25);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "DownwardOrganizational", function() { return __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layouts_upward_organizational__ = __webpack_require__(28);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "UpwardOrganizational", function() { return __WEBPACK_IMPORTED_MODULE_2__layouts_upward_organizational__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__layouts_left_logical__ = __webpack_require__(26);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "LeftLogical", function() { return __WEBPACK_IMPORTED_MODULE_3__layouts_left_logical__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__hierarchy_index__ = __webpack_require__(24);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Hierarchy", function() { return __WEBPACK_IMPORTED_MODULE_4__hierarchy_index__["default"]; });
+
+
+
+
 
 
 
@@ -597,5 +680,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ })
-/******/ ]);
+
+/******/ });
 });

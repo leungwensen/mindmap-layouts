@@ -73,59 +73,369 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const lettersLen = letters.length;
+const randomInt = __webpack_require__(2);
 
-function roundRandomInt(n) {
-  return Math.round(Math.random() * n);
-}
-function randomString(n) {
-  let res = '';
-  for (let i = 0; i < n; i++) {
-    res += letters[roundRandomInt(lettersLen)];
-  }
-  return res;
-}
-
-function generateRoot() {
-  return {
-    name: randomString(roundRandomInt(10)),
-    children: []
-  };
-}
-
-function generateNode(root, child) {
-  const rand = roundRandomInt(root.children.length);
-  if (rand === root.children.length) {
-    root.children.push(child);
-  } else {
-    generateNode(root.children[rand], child);
-  }
-}
-
-function randomNode(maxSize) {
-  const root = generateRoot();
-  for (let i = 0; i < maxSize; i++) {
-    generateNode(root, generateRoot());
-  }
-  return root;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = randomNode;
+module.exports = arr => {
+    if (!Array.isArray(arr) || !arr.length) {
+        return null;
+    }
+    return arr[randomInt(arr.length - 1)];
+};
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const namedColor = __webpack_require__(2);
+const randomInt = __webpack_require__(2);
+
+module.exports = (start, end) => start + randomInt(end - start);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = n => Math.round(Math.random() * n);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_random_graph__);
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = () => {
+  const rgba = `rgba(${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, ${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, ${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, 0.6)`;
+  return new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(rgba);
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomTree = __webpack_require__(15);
+const utils = __webpack_require__(5);
+
+const res = Object.assign({
+    randomTree
+}, utils);
+
+module.exports = res;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = {
+    randomCharFromCategories: __webpack_require__(6),
+    randomChinese: __webpack_require__(7),
+    randomFromArray: __webpack_require__(0),
+    randomFromRange: __webpack_require__(1),
+    randomInt: __webpack_require__(2),
+    randomJapanese: __webpack_require__(8),
+    randomLetter: __webpack_require__(9),
+    randomNumber: __webpack_require__(10),
+    randomSpecial: __webpack_require__(11),
+    randomString: __webpack_require__(16),
+    uuid: __webpack_require__(17)
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomFromArray = __webpack_require__(0);
+const randomByCats = {
+    chinese: __webpack_require__(7),
+    japanese: __webpack_require__(8),
+    letter: __webpack_require__(9),
+    number: __webpack_require__(10),
+    special: __webpack_require__(11)
+};
+
+module.exports = cats => {
+    const cat = randomFromArray(cats);
+    return randomByCats[cat]();
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomFromRange = __webpack_require__(1);
+
+const range = {
+    start: 0x4E00,
+    end: 0x9FA5
+};
+
+module.exports = () => String.fromCharCode(randomFromRange(range.start, range.end));
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomFromArray = __webpack_require__(0);
+const randomFromRange = __webpack_require__(1);
+
+const ranges = [{
+    start: 0x3040,
+    end: 0x309F
+}, {
+    start: 0x30A0,
+    end: 0x30FF
+}];
+
+module.exports = () => {
+    const range = randomFromArray(ranges);
+    return String.fromCharCode(randomFromRange(range.start, range.end));
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const randomFromArray = __webpack_require__(0);
+
+const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+module.exports = () => randomFromArray(letters);
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomFromArray = __webpack_require__(0);
+
+const numbers = '0123456789'.split('');
+
+module.exports = () => randomFromArray(numbers);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomFromArray = __webpack_require__(0);
+
+const specialChars = '!$%^&*()_+|~-=`{}[]:;<>?,./'.split('');
+
+module.exports = () => randomFromArray(specialChars);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(3);
+
+
+const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])().toGrey().toString(true);
+
+/* harmony default export */ __webpack_exports__["a"] = (n, c, ctx, isHorizontal) => {
+  let beginNode = n;
+  let endNode = c;
+  let beginX;
+  let beginY;
+  let endX;
+  let endY;
+  if (isHorizontal) {
+    if (n.x > c.x) {
+      beginNode = c;
+      endNode = n;
+    }
+    beginX = Math.round(beginNode.x + beginNode.width - beginNode.hgap);
+    beginY = Math.round(beginNode.y + beginNode.height / 2);
+    endX = Math.round(endNode.x + endNode.hgap);
+    endY = Math.round(endNode.y + endNode.height / 2);
+  } else {
+    if (n.y > c.y) {
+      beginNode = c;
+      endNode = n;
+    }
+    beginX = Math.round(beginNode.x + beginNode.width / 2);
+    beginY = Math.round(beginNode.y + beginNode.height - beginNode.vgap);
+    endX = Math.round(endNode.x + endNode.width / 2);
+    endY = Math.round(endNode.y + endNode.vgap);
+  }
+  if (beginNode.isRoot()) {
+    beginX = Math.round(beginNode.x + beginNode.width / 2);
+    beginY = Math.round(beginNode.y + beginNode.height / 2);
+  }
+  if (endNode.isRoot()) {
+    endX = Math.round(endNode.x + endNode.width / 2);
+    endY = Math.round(endNode.y + endNode.height / 2);
+  }
+  // console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
+  ctx.strokeStyle = lineColor;
+  ctx.beginPath();
+  ctx.moveTo(beginX, beginY);
+  if (isHorizontal) {
+    ctx.bezierCurveTo(Math.round(beginX + (beginNode.hgap + endNode.hgap) / 2), beginY, Math.round(endX - (beginNode.hgap + endNode.hgap) / 2), endY, endX, endY);
+  } else {
+    ctx.bezierCurveTo(beginX, Math.round(beginY + (beginNode.vgap + endNode.vgap) / 2), endX, Math.round(endY - (beginNode.vgap + endNode.vgap) / 2), endX, endY);
+  }
+  ctx.stroke();
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(3);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (node, ctx) => {
+    const color = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])();
+    // console.log(color.toRgba());
+    const x = Math.round(node.x + node.hgap);
+    const y = Math.round(node.y + node.vgap);
+    const width = Math.round(node.width - node.hgap * 2);
+    const height = Math.round(node.height - node.vgap * 2);
+    // const x = Math.round(node.x)
+    // const y = Math.round(node.y)
+    // const width = Math.round(node.width)
+    // const height = Math.round(node.height)
+    ctx.clearRect(x, y, width, height);
+    ctx.fillStyle = color.toString();
+    ctx.fillRect(x, y, width, height);
+    ctx.strokeStyle = color.toGrey().toString();
+    ctx.strokeRect(x, y, width, height);
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_random_graph__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = size => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_random_graph__["randomTree"])({
+  size,
+  attributes: {
+    id: {
+      type: 'uuid'
+    },
+    name: {
+      type: 'randomString',
+      options: {
+        length: 0,
+        maxLength: 12
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const utils = __webpack_require__(5);
+
+function generateRoot(options) {
+    const root = {
+        children: []
+    };
+    const attributes = options.attributes;
+    for (let key in attributes) {
+        root[key] = utils[attributes[key].type](attributes[key].options);
+    }
+    return root;
+}
+
+function generateNode(root, child) {
+    const rand = utils.randomInt(root.children.length);
+    if (rand === root.children.length) {
+        root.children.push(child);
+    } else {
+        generateNode(root.children[rand], child);
+    }
+}
+
+const DEFAULT_OPTIONS = {
+    size: 10,
+    attributes: {
+        id: {
+            type: 'uuid'
+        },
+        name: {
+            type: 'randomString',
+            options: {
+                maxLength: 10
+            }
+        }
+    }
+};
+
+function randomTree(customizedOptions) {
+    const options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
+    const root = generateRoot(options);
+    for (let i = 0; i < options.size; i++) {
+        generateNode(root, generateRoot(options));
+    }
+    return root;
+}
+
+module.exports = randomTree;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const randomCharFromCats = __webpack_require__(6);
+const randomFromRange = __webpack_require__(1);
+
+const DEFAULT_OPTIONS = {
+    length: 6,
+    maxLength: 6,
+    capitalization: 'lowercase', // lowercase, uppercase
+    categories: [
+    // 'number',
+    'letter']
+};
+
+module.exports = customizedOptions => {
+    const options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
+    let res = '';
+    const len = options.length ? options.length : randomFromRange(1, options.maxLength);
+    for (let i = 0; i < len; i++) {
+        res += randomCharFromCats(options.categories);
+    }
+    if (options.capitalization === 'uppercase') {
+        res = res.toUpperCase();
+    }
+    return res;
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+});
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const namedColor = __webpack_require__(19);
 
 const round = Math.round;
 
@@ -350,7 +660,7 @@ Color.named = Color.namedColor = namedColor;
 module.exports = Color;
 
 /***/ }),
-/* 2 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -506,28 +816,31 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_generate_tree__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_random_tree__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_draw_line__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_draw_node__ = __webpack_require__(13);
 
 
 
-const DownwardOrganizationalLayout = MindmapLayouts.DownloadOrganizational;
+
+const DownwardOrganizationalLayout = MindmapLayouts.DownwardOrganizational;
 
 const count = 20;
-const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__data_generate_tree__["a" /* default */])(count);
+const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_random_tree__["a" /* default */])(count);
 Object.assign(root, {
   'height': 80,
   'width': 300,
@@ -548,51 +861,16 @@ const canvas = document.getElementById('canvas');
 canvas.width = bb.width > 30000 ? 30000 : bb.width;
 canvas.height = bb.height > 30000 ? 30000 : bb.height;
 
-function randomNumber() {
-  return Math.random();
-}
-function randomInt(n) {
-  return Math.floor(randomNumber() * n);
-}
-function randomColor() {
-  return `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
-}
-function roundInt(num) {
-  return Math.round(num);
-}
+// rootNode.translate(0, -100) // test
+// rootNode.down2up() // test
 
-const lineColor = new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(randomColor()).toGrey().toString();
-function drawBezierCurveToChild(n, c, ctx) {
-  const beginX = roundInt(n.x + n.width / 2);
-  const beginY = roundInt(n.y + n.height - n.vgap);
-  const endX = roundInt(c.x + c.width / 2);
-  const endY = roundInt(c.y + c.vgap);
-  // console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
-  ctx.strokeStyle = lineColor;
-  ctx.beginPath();
-  ctx.moveTo(beginX, beginY);
-  ctx.bezierCurveTo(beginX, roundInt(beginY + (n.vgap + c.vgap) / 2), endX, roundInt(endY - (n.vgap + c.vgap) / 2), endX, endY);
-  ctx.stroke();
-}
-function drawNode(node, ctx) {
-  const color = new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(randomColor());
-  // console.log(color.toRgba());
-  const x = roundInt(node.x + node.hgap);
-  const y = roundInt(node.y + node.vgap);
-  const width = roundInt(node.width - node.hgap * 2);
-  const height = roundInt(node.height - node.vgap * 2);
-  ctx.fillStyle = color.toString(true);
-  ctx.fillRect(x, y, width, height);
-  ctx.strokeStyle = color.toGrey().toString();
-  ctx.strokeRect(x, y, width, height);
-  node.children.forEach(child => {
-    drawNode(child, ctx);
-  });
-}
-function drawLink(node, ctx) {
-  node.children.forEach(child => {
-    drawBezierCurveToChild(node, child, ctx);
-    drawLink(child, ctx);
+if (canvas.getContext) {
+  const ctx = canvas.getContext('2d');
+  rootNode.eachNode(node => {
+    node.children.forEach(child => {
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx);
+    });
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx);
   });
 }
 
@@ -600,12 +878,6 @@ const t2 = window.performance.now();
 
 console.log(`there are ${count} tree nodes`);
 console.log(`layout algorithm took ${t1 - t0}ms, and drawing took ${t2 - t1}ms.`);
-
-if (canvas.getContext) {
-  const ctx = canvas.getContext('2d');
-  drawLink(rootNode, ctx);
-  drawNode(rootNode, ctx);
-}
 
 /***/ })
 /******/ ]);

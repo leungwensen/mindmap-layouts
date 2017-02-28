@@ -74,10 +74,7 @@ const MindmapLayouts = require('mindmap-layouts');
 
 ```
 
-## demos
-
-- [right logical](http://leungwensen.github.io/mindmap-layouts/demo/right-logical.html)
-- [downward organizational](http://leungwensen.github.io/mindmap-layouts/demo/downward-organizational.html)
+## [demos](http://leungwensen.github.io/mindmap-layouts/demo/)
 
 ## links
 

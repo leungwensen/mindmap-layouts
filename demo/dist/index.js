@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -826,8 +826,7 @@ module.exports = {
 /* 27 */,
 /* 28 */,
 /* 29 */,
-/* 30 */,
-/* 31 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -839,47 +838,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const RightLogicalLayout = MindmapLayouts.RightLogical;
+const formNode = document.getElementById('layout-props');
+const layoutTimeNode = document.getElementById('layout-time');
+const renderTimeNode = document.getElementById('render-time');
 
-const count = 20;
-const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_random_tree__["a" /* default */])(count);
-Object.assign(root, {
-  'height': 80,
-  'width': 300,
-  'hgap': 100
-});
+formNode.addEventListener('change', render);
 
-const layout = new RightLogicalLayout(root);
-
-const t0 = window.performance.now();
-
-const rootNode = layout.doLayout();
-
-const t1 = window.performance.now();
-
-const bb = rootNode.getBoundingBox();
-// console.log(rootNode, bb)
-const canvas = document.getElementById('canvas');
-canvas.width = bb.width > 30000 ? 30000 : bb.width;
-canvas.height = bb.height > 30000 ? 30000 : bb.height;
-
-// rootNode.translate(0, -100) // test
-// rootNode.right2left() // test
-
-if (canvas.getContext) {
-  const ctx = canvas.getContext('2d');
-  rootNode.eachNode(node => {
-    node.children.forEach(child => {
-      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx, true);
-    });
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx);
-  });
+const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical'];
+function isHorizontal(type) {
+  return HORIZONTAL_LAYOUTS.indexOf(type) > -1;
 }
 
-const t2 = window.performance.now();
+function render() {
+  const count = formNode.dataSize.value;
+  const layoutType = formNode.layoutType.value;
+  const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_random_tree__["a" /* default */])(count);
+  Object.assign(root, {
+    'height': 80,
+    'width': 300,
+    'hgap': 100
+  });
 
-console.log(`there are ${count} tree nodes`);
-console.log(`layout algorithm took ${t1 - t0}ms, and drawing took ${t2 - t1}ms.`);
+  const MindmapLayout = MindmapLayouts[layoutType];
+  const layout = new MindmapLayout(root);
+
+  const t0 = window.performance.now();
+
+  const rootNode = layout.doLayout();
+
+  const t1 = window.performance.now();
+
+  const bb = rootNode.getBoundingBox();
+  const canvas = document.getElementById('canvas');
+  canvas.width = bb.width > 30000 ? 30000 : bb.width;
+  canvas.height = bb.height > 30000 ? 30000 : bb.height;
+
+  if (canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    rootNode.eachNode(node => {
+      node.children.forEach(child => {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx, isHorizontal(layoutType));
+      });
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx);
+    });
+  }
+
+  const t2 = window.performance.now();
+
+  layoutTimeNode.innerHTML = Math.round(t1 - t0);
+  renderTimeNode.innerHTML = Math.round(t2 - t1);
+}
+
+render();
 
 /***/ })
 /******/ ]);

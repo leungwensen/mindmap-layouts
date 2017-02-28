@@ -6,13 +6,11 @@ function resolve (pathname) {
 
 module.exports = {
   entry: {
-    'demo/dist/right-logical': resolve('./demo/src/right-logical.js'),
-    'demo/dist/downward-organizational': resolve('./demo/src/downward-organizational.js'),
+    'demo/dist/index': resolve('./demo/src/index.js'),
     'dist/mindmap-layouts': resolve('./lib/index')
   },
   output: {
     filename: '[name].js',
-    library: 'MindmapLayouts',
     libraryTarget: 'umd',
     path: resolve('./')
   },
