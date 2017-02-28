@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else if(typeof exports === 'object')
-		exports["MindmapLayouts"] = factory();
-	else
-		root["MindmapLayouts"] = factory();
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -73,14 +73,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(2);
+const randomInt = __webpack_require__(4);
 
 module.exports = arr => {
     if (!Array.isArray(arr) || !arr.length) {
@@ -90,27 +90,29 @@ module.exports = arr => {
 };
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(2);
+const randomInt = __webpack_require__(4);
 
 module.exports = (start, end) => start + randomInt(end - start);
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = n => Math.round(Math.random() * n);
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_random_graph__);
 
 
@@ -121,11 +123,13 @@ module.exports = n => Math.round(Math.random() * n);
 };
 
 /***/ }),
-/* 4 */
+/* 6 */,
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomTree = __webpack_require__(15);
-const utils = __webpack_require__(5);
+const randomTree = __webpack_require__(24);
+const utils = __webpack_require__(9);
 
 const res = Object.assign({
     randomTree
@@ -134,34 +138,34 @@ const res = Object.assign({
 module.exports = res;
 
 /***/ }),
-/* 5 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-    randomCharFromCategories: __webpack_require__(6),
-    randomChinese: __webpack_require__(7),
+    randomCharFromCategories: __webpack_require__(10),
+    randomChinese: __webpack_require__(11),
     randomFromArray: __webpack_require__(0),
-    randomFromRange: __webpack_require__(1),
-    randomInt: __webpack_require__(2),
-    randomJapanese: __webpack_require__(8),
-    randomLetter: __webpack_require__(9),
-    randomNumber: __webpack_require__(10),
-    randomSpecial: __webpack_require__(11),
-    randomString: __webpack_require__(16),
-    uuid: __webpack_require__(17)
+    randomFromRange: __webpack_require__(3),
+    randomInt: __webpack_require__(4),
+    randomJapanese: __webpack_require__(12),
+    randomLetter: __webpack_require__(13),
+    randomNumber: __webpack_require__(14),
+    randomSpecial: __webpack_require__(15),
+    randomString: __webpack_require__(25),
+    uuid: __webpack_require__(26)
 };
 
 /***/ }),
-/* 6 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
 const randomByCats = {
-    chinese: __webpack_require__(7),
-    japanese: __webpack_require__(8),
-    letter: __webpack_require__(9),
-    number: __webpack_require__(10),
-    special: __webpack_require__(11)
+    chinese: __webpack_require__(11),
+    japanese: __webpack_require__(12),
+    letter: __webpack_require__(13),
+    number: __webpack_require__(14),
+    special: __webpack_require__(15)
 };
 
 module.exports = cats => {
@@ -170,10 +174,10 @@ module.exports = cats => {
 };
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromRange = __webpack_require__(1);
+const randomFromRange = __webpack_require__(3);
 
 const range = {
     start: 0x4E00,
@@ -183,11 +187,11 @@ const range = {
 module.exports = () => String.fromCharCode(randomFromRange(range.start, range.end));
 
 /***/ }),
-/* 8 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
-const randomFromRange = __webpack_require__(1);
+const randomFromRange = __webpack_require__(3);
 
 const ranges = [{
     start: 0x3040,
@@ -203,7 +207,7 @@ module.exports = () => {
 };
 
 /***/ }),
-/* 9 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -214,7 +218,7 @@ const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 module.exports = () => randomFromArray(letters);
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
@@ -224,7 +228,7 @@ const numbers = '0123456789'.split('');
 module.exports = () => randomFromArray(numbers);
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
@@ -234,16 +238,16 @@ const specialChars = '!$%^&*()_+|~-=`{}[]:;<>?,./'.split('');
 module.exports = () => randomFromArray(specialChars);
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(5);
 
 
 const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])().toGrey().toString(true);
 
-/* harmony default export */ __webpack_exports__["a"] = (n, c, ctx, isHorizontal) => {
+/* harmony default export */ __webpack_exports__["a"] = (n, c, ctx, isHorizontal = false, scale = 1) => {
   let beginNode = n;
   let endNode = c;
   let beginX;
@@ -280,47 +284,47 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
   // console.log(`(${beginX}, ${beginY}), (${endX}, ${endY})`)
   ctx.strokeStyle = lineColor;
   ctx.beginPath();
-  ctx.moveTo(beginX, beginY);
+  ctx.moveTo(beginX / scale, beginY / scale);
   if (isHorizontal) {
-    ctx.bezierCurveTo(Math.round(beginX + (beginNode.hgap + endNode.hgap) / 2), beginY, Math.round(endX - (beginNode.hgap + endNode.hgap) / 2), endY, endX, endY);
+    ctx.bezierCurveTo(Math.round(beginX + (beginNode.hgap + endNode.hgap) / 2) / scale, beginY / scale, Math.round(endX - (beginNode.hgap + endNode.hgap) / 2) / scale, endY / scale, endX / scale, endY / scale);
   } else {
-    ctx.bezierCurveTo(beginX, Math.round(beginY + (beginNode.vgap + endNode.vgap) / 2), endX, Math.round(endY - (beginNode.vgap + endNode.vgap) / 2), endX, endY);
+    ctx.bezierCurveTo(beginX / scale, Math.round(beginY + (beginNode.vgap + endNode.vgap) / 2) / scale, endX / scale, Math.round(endY - (beginNode.vgap + endNode.vgap) / 2) / scale, endX / scale, endY / scale);
   }
   ctx.stroke();
 };
 
 /***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(5);
 
 
-/* harmony default export */ __webpack_exports__["a"] = (node, ctx) => {
-    const color = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])();
-    // console.log(color.toRgba());
-    const x = Math.round(node.x + node.hgap);
-    const y = Math.round(node.y + node.vgap);
-    const width = Math.round(node.width - node.hgap * 2);
-    const height = Math.round(node.height - node.vgap * 2);
-    // const x = Math.round(node.x)
-    // const y = Math.round(node.y)
-    // const width = Math.round(node.width)
-    // const height = Math.round(node.height)
-    ctx.clearRect(x, y, width, height);
-    ctx.fillStyle = color.toString();
-    ctx.fillRect(x, y, width, height);
-    ctx.strokeStyle = color.toGrey().toString();
-    ctx.strokeRect(x, y, width, height);
+/* harmony default export */ __webpack_exports__["a"] = (node, ctx, scale = 1) => {
+  const color = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])();
+  // console.log(color.toRgba());
+  const x = Math.round(node.x + node.hgap);
+  const y = Math.round(node.y + node.vgap);
+  const width = Math.round(node.width - node.hgap * 2);
+  const height = Math.round(node.height - node.vgap * 2);
+  // const x = Math.round(node.x)
+  // const y = Math.round(node.y)
+  // const width = Math.round(node.width)
+  // const height = Math.round(node.height)
+  ctx.clearRect(x / scale, y / scale, width / scale, height / scale);
+  ctx.fillStyle = color.toString();
+  ctx.fillRect(x / scale, y / scale, width / scale, height / scale);
+  ctx.strokeStyle = color.toGrey().toString();
+  ctx.strokeRect(x / scale, y / scale, width / scale, height / scale);
 };
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_random_graph__);
 
 
@@ -341,10 +345,15 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
 });
 
 /***/ }),
-/* 15 */
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const utils = __webpack_require__(5);
+const utils = __webpack_require__(9);
 
 function generateRoot(options) {
     const root = {
@@ -393,11 +402,11 @@ function randomTree(customizedOptions) {
 module.exports = randomTree;
 
 /***/ }),
-/* 16 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomCharFromCats = __webpack_require__(6);
-const randomFromRange = __webpack_require__(1);
+const randomCharFromCats = __webpack_require__(10);
+const randomFromRange = __webpack_require__(3);
 
 const DEFAULT_OPTIONS = {
     length: 6,
@@ -422,7 +431,7 @@ module.exports = customizedOptions => {
 };
 
 /***/ }),
-/* 17 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -432,10 +441,10 @@ module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c
 });
 
 /***/ }),
-/* 18 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const namedColor = __webpack_require__(19);
+const namedColor = __webpack_require__(28);
 
 const round = Math.round;
 
@@ -660,7 +669,7 @@ Color.named = Color.namedColor = namedColor;
 module.exports = Color;
 
 /***/ }),
-/* 19 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -816,37 +825,34 @@ module.exports = {
 };
 
 /***/ }),
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_random_tree__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_draw_line__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_draw_node__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_random_tree__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_draw_line__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_draw_node__ = __webpack_require__(17);
 
 
 
 
+const canvas = document.getElementById('canvas');
+const containerNode = document.getElementById('container');
 const formNode = document.getElementById('layout-props');
 const layoutTimeNode = document.getElementById('layout-time');
 const renderTimeNode = document.getElementById('render-time');
 
-formNode.addEventListener('change', render);
+const ctx = canvas.getContext('2d');
 
 const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical'];
 function isHorizontal(type) {
   return HORIZONTAL_LAYOUTS.indexOf(type) > -1;
+}
+
+function setCanvasSize() {
+  canvas.width = containerNode.offsetWidth;
+  canvas.height = containerNode.offsetHeight;
 }
 
 function render() {
@@ -856,7 +862,8 @@ function render() {
   Object.assign(root, {
     'height': 80,
     'width': 300,
-    'hgap': 100
+    'hgap': 100,
+    'vgap': 100
   });
 
   const MindmapLayout = MindmapLayouts[layoutType];
@@ -869,17 +876,15 @@ function render() {
   const t1 = window.performance.now();
 
   const bb = rootNode.getBoundingBox();
-  const canvas = document.getElementById('canvas');
-  canvas.width = bb.width > 30000 ? 30000 : bb.width;
-  canvas.height = bb.height > 30000 ? 30000 : bb.height;
+  const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height);
 
-  if (canvas.getContext) {
-    const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     rootNode.eachNode(node => {
       node.children.forEach(child => {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx, isHorizontal(layoutType));
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx, isHorizontal(layoutType), scale);
       });
-      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx);
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx, scale);
     });
   }
 
@@ -889,6 +894,13 @@ function render() {
   renderTimeNode.innerHTML = Math.round(t2 - t1);
 }
 
+formNode.addEventListener('change', render);
+window.onresize = () => {
+  setCanvasSize();
+  render();
+};
+
+setCanvasSize();
 render();
 
 /***/ })
