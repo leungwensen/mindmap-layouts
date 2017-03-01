@@ -1,6 +1,6 @@
 {
   "name": "mindmap-layouts",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "mindmap layouts",
   "main": "lib/index.js",
   "scripts": {
