@@ -1,8 +1,8 @@
-import {
+const {
   randomTree
-} from 'random-graph'
+} = require('random-graph')
 
-export default size => randomTree({
+module.exports = size => randomTree({
   size: size - 1,
   attributes: {
     id: {
@@ -12,7 +12,13 @@ export default size => randomTree({
       type: 'randomString',
       options: {
         length: 0,
-        maxLength: 12
+        maxLength: 16,
+        categories: [
+          'japanese',
+          'letter',
+          'chinese',
+          'special'
+        ]
       }
     }
   }

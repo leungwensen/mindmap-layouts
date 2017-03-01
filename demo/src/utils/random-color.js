@@ -1,9 +1,9 @@
-import Color from 'zero-colors'
-import {
+const Color = require('zero-colors')
+const {
   randomInt
-} from 'random-graph'
+} = require('random-graph')
 
-export default () => {
+module.exports = () => {
   const rgba = `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`
   return new Color(rgba)
 }

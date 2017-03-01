@@ -1,6 +1,6 @@
-import randomTree from './utils/random-tree'
-import drawLink from './utils/draw-line'
-import drawNode from './utils/draw-node'
+const randomTree = require('./utils/random-tree')
+const drawLink = require('./utils/draw-line')
+const drawNode = require('./utils/draw-node')
 
 const canvas = document.getElementById('canvas')
 const containerNode = document.getElementById('container')
@@ -8,6 +8,7 @@ const formNode = document.getElementById('layout-props')
 const layoutTimeNode = document.getElementById('layout-time')
 const renderTimeNode = document.getElementById('render-time')
 
+const PEM = 18
 const ctx = canvas.getContext('2d')
 
 const HORIZONTAL_LAYOUTS = [
@@ -28,22 +29,47 @@ function render () {
   const count = formNode.dataSize.value
   const layoutType = formNode.layoutType.value
   const root = randomTree(count)
-  console.log(root)
   Object.assign(root, {
-    'height': 80,
-    'width': 300,
-    'hgap': 100,
-    'vgap': 100
+    isRoot: true
   })
 
+  ctx.font = `${PEM}px Courier, monospace`
+
   const MindmapLayout = MindmapLayouts[layoutType]
-  const layout = new MindmapLayout(root)
+  const layout = new MindmapLayout(root, {
+    getHeight (d) {
+      if (d.isRoot) {
+        return PEM * 2.4
+      }
+      return PEM * 1.2
+    },
+    getWidth (d) {
+      if (d.isRoot) {
+        return ctx.measureText(d.name).width * 2 + PEM * 1.6
+      }
+      return ctx.measureText(d.name).width + PEM * 1.6
+    },
+    getHGap (d) {
+      if (d.isRoot) {
+        return PEM * 2
+      }
+      return Math.round(PEM / 2)
+    },
+    getVGap (d) {
+      if (d.isRoot) {
+        return PEM * 2
+      }
+      return Math.round(PEM / 2)
+    }
+  })
 
   const t0 = window.performance.now()
 
   const rootNode = layout.doLayout()
 
   const t1 = window.performance.now()
+
+  console.log(rootNode)
 
   const bb = rootNode.getBoundingBox()
   const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height)
@@ -77,3 +103,5 @@ window.onresize = () => {
 
 setCanvasSize()
 render()
+
+module.exports = MindmapLayouts

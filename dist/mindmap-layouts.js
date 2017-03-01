@@ -1,51 +1,42 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
+window["MindmapLayouts"] =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -56,7 +47,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -65,13 +56,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
@@ -79,11 +70,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ([
 /* 0 */,
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__ = __webpack_require__(7);
-
+const WrappedTree = __webpack_require__(7);
 
 // node utils
 function moveRight(node, move, isHorizontal) {
@@ -134,7 +123,7 @@ function layer(node, isHorizontal, d = 0) {
   });
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (root, isHorizontal) => {
+module.exports = (root, isHorizontal) => {
   function firstWalk(t) {
     if (t.cs === 0) {
       setExtremes(t);
@@ -279,7 +268,7 @@ function layer(node, isHorizontal, d = 0) {
 
   // do layout
   layer(root, isHorizontal);
-  const wt = __WEBPACK_IMPORTED_MODULE_0__hierarchy_wrapped_tree__["a" /* default */].fromNode(root, isHorizontal);
+  const wt = WrappedTree.fromNode(root, isHorizontal);
   // console.log(wt)
   firstWalk(wt);
   secondWalk(wt, 0);
@@ -291,16 +280,14 @@ function layer(node, isHorizontal, d = 0) {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__ = __webpack_require__(4);
-
+const Node = __webpack_require__(4);
 
 class Layout {
   constructor(root, options = {}, extraEdges = []) {
     const me = this;
-    me.root = new __WEBPACK_IMPORTED_MODULE_0__hierarchy_node__["a" /* default */](root, options);
+    me.root = new Node(root, options);
     me.options = options;
     me.extraEdges = extraEdges;
   }
@@ -357,14 +344,13 @@ class Layout {
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = Layout;
+module.exports = Layout;
 
 /***/ }),
 /* 3 */,
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
 const PEM = 18;
 const DEFAULT_HEIGHT = PEM * 2;
 const DEFAULT_GAP = PEM;
@@ -497,15 +483,14 @@ class Node {
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = Node;
+module.exports = Node;
 
 /***/ }),
 /* 5 */,
 /* 6 */,
 /* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
 class WrappedTree {
 
   // Array of children and number of children.
@@ -556,7 +541,7 @@ WrappedTree.fromNode = (root, isHorizontal) => {
   return new WrappedTree(root.width, root.height, root.y, children);
 };
 
-/* harmony default export */ __webpack_exports__["a"] = WrappedTree;
+module.exports = WrappedTree;
 
 /***/ }),
 /* 8 */,
@@ -571,97 +556,79 @@ WrappedTree.fromNode = (root, isHorizontal) => {
 /* 17 */,
 /* 18 */,
 /* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node__ = __webpack_require__(4);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__node__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__ = __webpack_require__(7);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__wrapped_tree__["a"]; });
-
-
-
-
+module.exports = {
+  Node: __webpack_require__(4),
+  WrappedTree: __webpack_require__(7)
+};
 
 /***/ }),
 /* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(1);
+const Layout = __webpack_require__(2);
+const nonLayeredTidyTree = __webpack_require__(1);
 
-
-
-class DownwardOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class DownwardOrganizational extends Layout {
   doLayout() {
     const root = this.root;
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, false);
+    return nonLayeredTidyTree(root, false);
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = DownwardOrganizational;
+module.exports = DownwardOrganizational;
 
 /***/ }),
 /* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(1);
+const Layout = __webpack_require__(2);
+const nonLayeredTidyTree = __webpack_require__(1);
 
-
-
-class LeftLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class LeftLogical extends Layout {
   doLayout() {
     const root = this.root;
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, true);
+    nonLayeredTidyTree(root, true);
     root.right2left();
     return root;
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = LeftLogical;
+module.exports = LeftLogical;
 
 /***/ }),
 /* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(1);
+const Layout = __webpack_require__(2);
+const nonLayeredTidyTree = __webpack_require__(1);
 
-
-
-class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class RightLogical extends Layout {
   doLayout() {
     const root = this.root;
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, true);
+    return nonLayeredTidyTree(root, true);
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = RightLogical;
+module.exports = RightLogical;
 
 /***/ }),
 /* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__hierarchy_node__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__algorithms_non_layered_tidy_tree__ = __webpack_require__(1);
+const Layout = __webpack_require__(2);
+const Node = __webpack_require__(4);
+const nonLayeredTidyTree = __webpack_require__(1);
 
-
-
-
-class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class RightLogical extends Layout {
   doLayout() {
     const me = this;
     const root = me.root;
     const options = me.options;
     // separate into left and right trees
-    const leftTree = new __WEBPACK_IMPORTED_MODULE_1__hierarchy_node__["a" /* default */](root.data, options, true);
-    const rightTree = new __WEBPACK_IMPORTED_MODULE_1__hierarchy_node__["a" /* default */](root.data, options, true);
+    const leftTree = new Node(root.data, options, true);
+    const rightTree = new Node(root.data, options, true);
     const treeSize = root.children.length;
     const rightTreeSize = Math.round(treeSize / 2);
     for (let i = 0; i < treeSize; i++) {
@@ -673,8 +640,8 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
       }
     }
     // do layout for left and right trees
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__algorithms_non_layered_tidy_tree__["a" /* default */])(rightTree, true);
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__algorithms_non_layered_tidy_tree__["a" /* default */])(leftTree, true);
+    nonLayeredTidyTree(rightTree, true);
+    nonLayeredTidyTree(leftTree, true);
     leftTree.right2left();
     // combine left and right trees
     rightTree.translate(leftTree.x - rightTree.x, leftTree.y - rightTree.y);
@@ -689,28 +656,25 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = RightLogical;
+module.exports = RightLogical;
 
 /***/ }),
 /* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__ = __webpack_require__(1);
+const Layout = __webpack_require__(2);
+const nonLayeredTidyTree = __webpack_require__(1);
 
-
-
-class UpwardOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default */] {
+class UpwardOrganizational extends Layout {
   doLayout() {
     const root = this.root;
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__algorithms_non_layered_tidy_tree__["a" /* default */])(root, false);
+    nonLayeredTidyTree(root, false);
     root.down2up();
     return root;
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = UpwardOrganizational;
+module.exports = UpwardOrganizational;
 
 /***/ }),
 /* 25 */,
@@ -720,33 +684,28 @@ class UpwardOrganizational extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* 
 /* 29 */,
 /* 30 */,
 /* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layouts_upward_organizational__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__layouts_left_logical__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__layouts_standard__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hierarchy_index__ = __webpack_require__(19);
+const RightLogical = __webpack_require__(22);
+const DownwardOrganizational = __webpack_require__(20);
+const UpwardOrganizational = __webpack_require__(24);
+const LeftLogical = __webpack_require__(21);
+const Standard = __webpack_require__(23);
+const {
+  Node,
+  WrappedTree
+} = __webpack_require__(19);
 
-
-
-
-
-
-
-window.MindmapLayouts = {
-  RightLogical: __WEBPACK_IMPORTED_MODULE_0__layouts_right_logical__["a" /* default */],
-  DownwardOrganizational: __WEBPACK_IMPORTED_MODULE_1__layouts_downward_organizational__["a" /* default */],
-  UpwardOrganizational: __WEBPACK_IMPORTED_MODULE_2__layouts_upward_organizational__["a" /* default */],
-  LeftLogical: __WEBPACK_IMPORTED_MODULE_3__layouts_left_logical__["a" /* default */],
-  Standard: __WEBPACK_IMPORTED_MODULE_4__layouts_standard__["a" /* default */],
-  Node: __WEBPACK_IMPORTED_MODULE_5__hierarchy_index__["a" /* Node */],
-  WrappedTree: __WEBPACK_IMPORTED_MODULE_5__hierarchy_index__["b" /* WrappedTree */]
+module.exports = {
+  RightLogical,
+  DownwardOrganizational,
+  UpwardOrganizational,
+  LeftLogical,
+  Standard,
+  Node,
+  WrappedTree
 };
 
 /***/ })
 /******/ ]);
-});
+//# sourceMappingURL=mindmap-layouts.js.map

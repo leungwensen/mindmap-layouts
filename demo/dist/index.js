@@ -1,51 +1,42 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
+window["MindmapLayouts"] =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -56,7 +47,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -65,13 +56,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
@@ -108,19 +99,16 @@ module.exports = n => Math.round(Math.random() * n);
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_random_graph__);
+const Color = __webpack_require__(28);
+const {
+  randomInt
+} = __webpack_require__(8);
 
-
-
-/* harmony default export */ __webpack_exports__["a"] = () => {
-  const rgba = `rgba(${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, ${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, ${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_random_graph__["randomInt"])(255)}, 0.6)`;
-  return new __WEBPACK_IMPORTED_MODULE_0_zero_colors___default.a(rgba);
+module.exports = () => {
+  const rgba = `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
+  return new Color(rgba);
 };
 
 /***/ }),
@@ -239,15 +227,13 @@ module.exports = () => randomFromArray(specialChars);
 
 /***/ }),
 /* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(6);
+const randomColor = __webpack_require__(6);
 
+const lineColor = randomColor().toGrey().toString(true);
 
-const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])().toGrey().toString(true);
-
-/* harmony default export */ __webpack_exports__["a"] = (n, c, ctx, isHorizontal = false, scale = 1) => {
+module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
   let beginNode = n;
   let endNode = c;
   let beginX;
@@ -295,14 +281,15 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
 
 /***/ }),
 /* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(6);
+const randomColor = __webpack_require__(6);
 
+const PEM = 18;
 
-/* harmony default export */ __webpack_exports__["a"] = (node, ctx, scale = 1) => {
-  const color = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])();
+module.exports = (node, ctx, scale = 1) => {
+  const origin = node.data;
+  const color = randomColor();
   // console.log(color.toRgba());
   const x = Math.round(node.x + node.hgap);
   const y = Math.round(node.y + node.vgap);
@@ -312,23 +299,31 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
   // const y = Math.round(node.y)
   // const width = Math.round(node.width)
   // const height = Math.round(node.height)
+  // node
   ctx.clearRect(x / scale, y / scale, width / scale, height / scale);
   ctx.fillStyle = color.toString();
   ctx.fillRect(x / scale, y / scale, width / scale, height / scale);
   ctx.strokeStyle = color.toGrey().toString();
   ctx.strokeRect(x / scale, y / scale, width / scale, height / scale);
+  // text
+  if (origin.isRoot) {
+    ctx.font = `${PEM * 2 / scale}px Courier, monospace`;
+  } else {
+    ctx.font = `${PEM / scale}px Courier, monospace`;
+  }
+  ctx.fillStyle = '#666';
+  ctx.fillText(origin.name, (x + PEM * 0.8) / scale, (y + (origin.isRoot ? PEM * 2 : PEM * 1)) / scale);
 };
 
 /***/ }),
 /* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_random_graph__);
+const {
+  randomTree
+} = __webpack_require__(8);
 
-
-/* harmony default export */ __webpack_exports__["a"] = size => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_random_graph__["randomTree"])({
+module.exports = size => randomTree({
   size: size - 1,
   attributes: {
     id: {
@@ -338,7 +333,8 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
       type: 'randomString',
       options: {
         length: 0,
-        maxLength: 12
+        maxLength: 16,
+        categories: ['japanese', 'letter', 'chinese', 'special']
       }
     }
   }
@@ -827,16 +823,11 @@ module.exports = {
 
 /***/ }),
 /* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_random_tree__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_draw_line__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_draw_node__ = __webpack_require__(17);
-
-
-
+const randomTree = __webpack_require__(18);
+const drawLink = __webpack_require__(16);
+const drawNode = __webpack_require__(17);
 
 const canvas = document.getElementById('canvas');
 const containerNode = document.getElementById('container');
@@ -844,6 +835,7 @@ const formNode = document.getElementById('layout-props');
 const layoutTimeNode = document.getElementById('layout-time');
 const renderTimeNode = document.getElementById('render-time');
 
+const PEM = 18;
 const ctx = canvas.getContext('2d');
 
 const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical', 'Standard'];
@@ -859,23 +851,48 @@ function setCanvasSize() {
 function render() {
   const count = formNode.dataSize.value;
   const layoutType = formNode.layoutType.value;
-  const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_random_tree__["a" /* default */])(count);
-  console.log(root);
+  const root = randomTree(count);
   Object.assign(root, {
-    'height': 80,
-    'width': 300,
-    'hgap': 100,
-    'vgap': 100
+    isRoot: true
   });
 
+  ctx.font = `${PEM}px Courier, monospace`;
+
   const MindmapLayout = MindmapLayouts[layoutType];
-  const layout = new MindmapLayout(root);
+  const layout = new MindmapLayout(root, {
+    getHeight(d) {
+      if (d.isRoot) {
+        return PEM * 2.4;
+      }
+      return PEM * 1.2;
+    },
+    getWidth(d) {
+      if (d.isRoot) {
+        return ctx.measureText(d.name).width * 2 + PEM * 1.6;
+      }
+      return ctx.measureText(d.name).width + PEM * 1.6;
+    },
+    getHGap(d) {
+      if (d.isRoot) {
+        return PEM * 2;
+      }
+      return Math.round(PEM / 2);
+    },
+    getVGap(d) {
+      if (d.isRoot) {
+        return PEM * 2;
+      }
+      return Math.round(PEM / 2);
+    }
+  });
 
   const t0 = window.performance.now();
 
   const rootNode = layout.doLayout();
 
   const t1 = window.performance.now();
+
+  console.log(rootNode);
 
   const bb = rootNode.getBoundingBox();
   const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height);
@@ -884,9 +901,9 @@ function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rootNode.eachNode(node => {
       node.children.forEach(child => {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils_draw_line__["a" /* default */])(node, child, ctx, isHorizontal(layoutType), scale);
+        drawLink(node, child, ctx, isHorizontal(layoutType), scale);
       });
-      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils_draw_node__["a" /* default */])(node, ctx, scale);
+      drawNode(node, ctx, scale);
     });
   }
 
@@ -910,6 +927,8 @@ window.onresize = () => {
 setCanvasSize();
 render();
 
+module.exports = MindmapLayouts;
+
 /***/ })
 /******/ ]);
-});
+//# sourceMappingURL=index.js.map

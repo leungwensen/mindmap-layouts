@@ -2,7 +2,7 @@
   "name": "mindmap-layouts",
   "version": "0.2.5",
   "description": "mindmap layouts",
-  "main": "dist/mindmap-layouts.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "dev": "webpack-dev-server --config ./webpack-dev.config.js --open",

@@ -1,8 +1,8 @@
-import randomColor from './random-color'
+const randomColor = require('./random-color')
 
 const lineColor = randomColor().toGrey().toString(true)
 
-export default (n, c, ctx, isHorizontal = false, scale = 1) => {
+module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
   let beginNode = n
   let endNode = c
   let beginX
