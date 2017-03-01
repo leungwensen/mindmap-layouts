@@ -409,15 +409,15 @@ class Node {
     me.id = fallbackExecuteOnData(options.getId, DEFAULT_OPTIONS.getId, data);
     me.x = me.y = 0;
     me.depth = 0;
-    me.children = [];
     if (!isolated && !data.isCollapsed) {
       const nodes = [me];
       let node;
       while (node = nodes.pop()) {
         const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
         const length = children ? children.length : 0;
+        node.children = [];
         if (children && length) {
-          for (let i = length - 1; i >= 0; --i) {
+          for (let i = 0; i < length; i++) {
             const child = new Node(children[i], options);
             node.children.push(child);
             nodes.push(child);
@@ -426,6 +426,9 @@ class Node {
           }
         }
       }
+    }
+    if (!me.children) {
+      me.children = [];
     }
     me.addGap(hgap, vgap);
   }
@@ -656,6 +659,7 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
     const me = this;
     const root = me.root;
     const options = me.options;
+    // separate into left and right trees
     const leftTree = new __WEBPACK_IMPORTED_MODULE_1__hierarchy_node__["a" /* default */](root.data, options, true);
     const rightTree = new __WEBPACK_IMPORTED_MODULE_1__hierarchy_node__["a" /* default */](root.data, options, true);
     const treeSize = root.children.length;
@@ -668,12 +672,20 @@ class RightLogical extends __WEBPACK_IMPORTED_MODULE_0__layout__["a" /* default 
         leftTree.children.push(child);
       }
     }
+    // do layout for left and right trees
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__algorithms_non_layered_tidy_tree__["a" /* default */])(rightTree, true);
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__algorithms_non_layered_tidy_tree__["a" /* default */])(leftTree, true);
     leftTree.right2left();
+    // combine left and right trees
     rightTree.translate(leftTree.x - rightTree.x, leftTree.y - rightTree.y);
+    // translate root
     root.x = leftTree.x;
     root.y = rightTree.y;
+    const bb = root.getBoundingBox();
+    if (bb.top < 0) {
+      root.translate(0, -bb.top);
+    }
+    return root;
   }
 }
 

@@ -329,7 +329,7 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
 
 
 /* harmony default export */ __webpack_exports__["a"] = size => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_random_graph__["randomTree"])({
-  size,
+  size: size - 1,
   attributes: {
     id: {
       type: 'uuid'
@@ -846,7 +846,7 @@ const renderTimeNode = document.getElementById('render-time');
 
 const ctx = canvas.getContext('2d');
 
-const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical'];
+const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical', 'Standard'];
 function isHorizontal(type) {
   return HORIZONTAL_LAYOUTS.indexOf(type) > -1;
 }
@@ -860,6 +860,7 @@ function render() {
   const count = formNode.dataSize.value;
   const layoutType = formNode.layoutType.value;
   const root = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils_random_tree__["a" /* default */])(count);
+  console.log(root);
   Object.assign(root, {
     'height': 80,
     'width': 300,
