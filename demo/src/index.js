@@ -12,7 +12,8 @@ const ctx = canvas.getContext('2d')
 
 const HORIZONTAL_LAYOUTS = [
   'LeftLogical',
-  'RightLogical'
+  'RightLogical',
+  'Standard'
 ]
 function isHorizontal (type) {
   return HORIZONTAL_LAYOUTS.indexOf(type) > -1
@@ -27,6 +28,7 @@ function render () {
   const count = formNode.dataSize.value
   const layoutType = formNode.layoutType.value
   const root = randomTree(count)
+  console.log(root)
   Object.assign(root, {
     'height': 80,
     'width': 300,

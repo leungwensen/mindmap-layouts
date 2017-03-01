@@ -3,7 +3,7 @@ import {
 } from 'random-graph'
 
 export default size => randomTree({
-  size,
+  size: size - 1,
   attributes: {
     id: {
       type: 'uuid'

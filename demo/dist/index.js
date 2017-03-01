@@ -73,14 +73,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(4);
+const randomInt = __webpack_require__(5);
 
 module.exports = arr => {
     if (!Array.isArray(arr) || !arr.length) {
@@ -95,22 +95,23 @@ module.exports = arr => {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(4);
+const randomInt = __webpack_require__(5);
 
 module.exports = (start, end) => start + randomInt(end - start);
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = n => Math.round(Math.random() * n);
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zero_colors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_zero_colors__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_random_graph___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_random_graph__);
@@ -123,12 +124,11 @@ module.exports = n => Math.round(Math.random() * n);
 };
 
 /***/ }),
-/* 6 */,
 /* 7 */,
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomTree = __webpack_require__(24);
+const randomTree = __webpack_require__(25);
 const utils = __webpack_require__(9);
 
 const res = Object.assign({
@@ -146,13 +146,13 @@ module.exports = {
     randomChinese: __webpack_require__(11),
     randomFromArray: __webpack_require__(0),
     randomFromRange: __webpack_require__(3),
-    randomInt: __webpack_require__(4),
+    randomInt: __webpack_require__(5),
     randomJapanese: __webpack_require__(12),
     randomLetter: __webpack_require__(13),
     randomNumber: __webpack_require__(14),
     randomSpecial: __webpack_require__(15),
-    randomString: __webpack_require__(25),
-    uuid: __webpack_require__(26)
+    randomString: __webpack_require__(26),
+    uuid: __webpack_require__(27)
 };
 
 /***/ }),
@@ -242,7 +242,7 @@ module.exports = () => randomFromArray(specialChars);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(6);
 
 
 const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_color__["a" /* default */])().toGrey().toString(true);
@@ -298,7 +298,7 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__random_color__ = __webpack_require__(6);
 
 
 /* harmony default export */ __webpack_exports__["a"] = (node, ctx, scale = 1) => {
@@ -350,7 +350,8 @@ const lineColor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__random_colo
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const utils = __webpack_require__(9);
@@ -402,7 +403,7 @@ function randomTree(customizedOptions) {
 module.exports = randomTree;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomCharFromCats = __webpack_require__(10);
@@ -431,7 +432,7 @@ module.exports = customizedOptions => {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -441,10 +442,10 @@ module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c
 });
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const namedColor = __webpack_require__(28);
+const namedColor = __webpack_require__(29);
 
 const round = Math.round;
 
@@ -669,7 +670,7 @@ Color.named = Color.namedColor = namedColor;
 module.exports = Color;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -825,7 +826,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -17,11 +17,16 @@
 
     aside {
       position: absolute;
-      right: 0;
-      bottom: 0;
+      right: 2px;
+      top: 2px;
       padding: .5em;
       border: 1px solid gray;
       background-color: white;
+      opacity: 0.5;
+    }
+
+    aside:hover {
+      opacity: 0.9;
     }
 
     form {
@@ -58,12 +63,13 @@
 
 <aside>
   <form id="layout-props" class="layout-props">
-    <input name="dataSize" type="number" min="1" value="30">
+    <input name="dataSize" type="number" min="1" value="10">
     <select name="layoutType">
+      <option value="Standard">Standard</option>
+      <option value="RightLogical">Right Logical</option>
       <option value="DownwardOrganizational">Downward Organizational</option>
       <option value="UpwardOrganizational">Upward Organizational</option>
       <option value="LeftLogical">Left Logical</option>
-      <option value="RightLogical">Right Logical</option>
     </select>
   </form>
   <table>
