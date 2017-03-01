@@ -1,6 +1,4 @@
-const randomColor = require('./random-color')
-
-const lineColor = randomColor().toGrey().toString(true)
+const lineColor = '#999'
 
 module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
   let beginNode = n

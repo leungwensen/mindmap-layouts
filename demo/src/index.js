@@ -69,10 +69,11 @@ function render () {
 
   const t1 = window.performance.now()
 
-  console.log(rootNode)
-
+  setCanvasSize()
   const bb = rootNode.getBoundingBox()
   const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height)
+  canvas.width = bb.width / scale
+  canvas.height = bb.height / scale
 
   if (ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)

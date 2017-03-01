@@ -2,41 +2,41 @@ window["MindmapLayouts"] =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
+
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -47,7 +47,7 @@ window["MindmapLayouts"] =
 /******/ 			});
 /******/ 		}
 /******/ 	};
-/******/
+
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -56,13 +56,13 @@ window["MindmapLayouts"] =
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-/******/
+
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
@@ -98,26 +98,12 @@ module.exports = (start, end) => start + randomInt(end - start);
 module.exports = n => Math.round(Math.random() * n);
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const Color = __webpack_require__(28);
-const {
-  randomInt
-} = __webpack_require__(8);
-
-module.exports = () => {
-  const rgba = `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
-  return new Color(rgba);
-};
-
-/***/ }),
-/* 7 */,
-/* 8 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomTree = __webpack_require__(25);
-const utils = __webpack_require__(9);
+const utils = __webpack_require__(8);
 
 const res = Object.assign({
     randomTree
@@ -126,34 +112,34 @@ const res = Object.assign({
 module.exports = res;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-    randomCharFromCategories: __webpack_require__(10),
-    randomChinese: __webpack_require__(11),
+    randomCharFromCategories: __webpack_require__(9),
+    randomChinese: __webpack_require__(10),
     randomFromArray: __webpack_require__(0),
     randomFromRange: __webpack_require__(3),
     randomInt: __webpack_require__(5),
-    randomJapanese: __webpack_require__(12),
-    randomLetter: __webpack_require__(13),
-    randomNumber: __webpack_require__(14),
-    randomSpecial: __webpack_require__(15),
+    randomJapanese: __webpack_require__(11),
+    randomLetter: __webpack_require__(12),
+    randomNumber: __webpack_require__(13),
+    randomSpecial: __webpack_require__(14),
     randomString: __webpack_require__(26),
     uuid: __webpack_require__(27)
 };
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
 const randomByCats = {
-    chinese: __webpack_require__(11),
-    japanese: __webpack_require__(12),
-    letter: __webpack_require__(13),
-    number: __webpack_require__(14),
-    special: __webpack_require__(15)
+    chinese: __webpack_require__(10),
+    japanese: __webpack_require__(11),
+    letter: __webpack_require__(12),
+    number: __webpack_require__(13),
+    special: __webpack_require__(14)
 };
 
 module.exports = cats => {
@@ -162,7 +148,7 @@ module.exports = cats => {
 };
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromRange = __webpack_require__(3);
@@ -175,7 +161,7 @@ const range = {
 module.exports = () => String.fromCharCode(randomFromRange(range.start, range.end));
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
@@ -195,7 +181,7 @@ module.exports = () => {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -206,7 +192,7 @@ const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 module.exports = () => randomFromArray(letters);
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
@@ -216,7 +202,7 @@ const numbers = '0123456789'.split('');
 module.exports = () => randomFromArray(numbers);
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const randomFromArray = __webpack_require__(0);
@@ -226,12 +212,10 @@ const specialChars = '!$%^&*()_+|~-=`{}[]:;<>?,./'.split('');
 module.exports = () => randomFromArray(specialChars);
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 15 */
+/***/ (function(module, exports) {
 
-const randomColor = __webpack_require__(6);
-
-const lineColor = randomColor().toGrey().toString(true);
+const lineColor = '#999';
 
 module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
   let beginNode = n;
@@ -280,10 +264,10 @@ module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
 };
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomColor = __webpack_require__(6);
+const randomColor = __webpack_require__(24);
 
 const PEM = 18;
 
@@ -316,12 +300,12 @@ module.exports = (node, ctx, scale = 1) => {
 };
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {
   randomTree
-} = __webpack_require__(8);
+} = __webpack_require__(7);
 
 module.exports = size => randomTree({
   size: size - 1,
@@ -341,16 +325,30 @@ module.exports = size => randomTree({
 });
 
 /***/ }),
+/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */,
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Color = __webpack_require__(28);
+const {
+  randomInt
+} = __webpack_require__(7);
+
+module.exports = () => {
+  const rgba = `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
+  return new Color(rgba);
+};
+
+/***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const utils = __webpack_require__(9);
+const utils = __webpack_require__(8);
 
 function generateRoot(options) {
     const root = {
@@ -402,7 +400,7 @@ module.exports = randomTree;
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomCharFromCats = __webpack_require__(10);
+const randomCharFromCats = __webpack_require__(9);
 const randomFromRange = __webpack_require__(3);
 
 const DEFAULT_OPTIONS = {
@@ -825,9 +823,9 @@ module.exports = {
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomTree = __webpack_require__(18);
-const drawLink = __webpack_require__(16);
-const drawNode = __webpack_require__(17);
+const randomTree = __webpack_require__(17);
+const drawLink = __webpack_require__(15);
+const drawNode = __webpack_require__(16);
 
 const canvas = document.getElementById('canvas');
 const containerNode = document.getElementById('container');
@@ -892,10 +890,11 @@ function render() {
 
   const t1 = window.performance.now();
 
-  console.log(rootNode);
-
+  setCanvasSize();
   const bb = rootNode.getBoundingBox();
   const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height);
+  canvas.width = bb.width / scale;
+  canvas.height = bb.height / scale;
 
   if (ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -931,4 +930,3 @@ module.exports = MindmapLayouts;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=index.js.map

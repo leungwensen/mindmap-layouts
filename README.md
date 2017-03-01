@@ -70,11 +70,50 @@ $ npm install mindmap-layouts --save
 ## API
 
 ```javascript
-const MindmapLayouts = require('mindmap-layouts');
-
+const MindmapLayouts = require('mindmap-layouts')
+const layout = new MindmapLayouts.Standard(root, options) // root is tree node like above
+const rootNode = layout.doLayout() // you have x, y, centX, centY, actualHeight, actualWidth, etc.
 ```
 
-## [demos](http://leungwensen.github.io/mindmap-layouts/demo/)
+checkout [here](https://github.com/leungwensen/mindmap-layouts/tree/master/demo/src) for a real world demo
+
+## [demo](http://leungwensen.github.io/mindmap-layouts/demo/)
+
+## layouts
+
+### standard
+
+![standard](./assets/standard.png)
+
+### right logical
+
+![right-logical](./assets/right-logical.png)
+
+### left logical
+
+![left-logical](./assets/left-logical.png)
+
+### downward organizational
+
+![downward-organizational](./assets/downward-organizational.png)
+
+### upward organizational
+
+![upward-organizational](./assets/upward-organizational.png)
+
+### [TODO] right fishbone
+
+### [TODO] left fishbone
+
+### [TODO] indented
+
+### [TODO] arc tree
+
+### [TODO] elbow tree
+
+### [TODO] horizontal Timeline
+
+### [TODO] vertical Timeline
 
 ## links
 
