@@ -408,16 +408,18 @@ class Node {
       const nodes = [me];
       let node;
       while (node = nodes.pop()) {
-        const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
-        const length = children ? children.length : 0;
-        node.children = [];
-        if (children && length) {
-          for (let i = 0; i < length; i++) {
-            const child = new Node(children[i], options);
-            node.children.push(child);
-            nodes.push(child);
-            child.parent = node;
-            child.depth = node.depth + 1;
+        if (!node.isCollapsed) {
+          const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
+          const length = children ? children.length : 0;
+          node.children = [];
+          if (children && length) {
+            for (let i = 0; i < length; i++) {
+              const child = new Node(children[i], options);
+              node.children.push(child);
+              nodes.push(child);
+              child.parent = node;
+              child.depth = node.depth + 1;
+            }
           }
         }
       }
@@ -629,7 +631,7 @@ const Layout = __webpack_require__(2);
 const Node = __webpack_require__(4);
 const nonLayeredTidyTree = __webpack_require__(1);
 
-class RightLogical extends Layout {
+class Standard extends Layout {
   doLayout() {
     const me = this;
     const root = me.root;
@@ -664,7 +666,7 @@ class RightLogical extends Layout {
   }
 }
 
-module.exports = RightLogical;
+module.exports = Standard;
 
 /***/ }),
 /* 23 */
