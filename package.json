@@ -1,6 +1,6 @@
 {
   "name": "mindmap-layouts",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "mindmap layouts",
   "main": "dist/mindmap-layouts.js",
   "scripts": {
