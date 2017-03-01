@@ -12,7 +12,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     library: 'MindmapLayouts',
-    libraryTarget: 'window',
+    libraryTarget: 'umd',
     path: resolve('./')
   },
   module: {
